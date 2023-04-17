@@ -6,6 +6,7 @@ import {
   Dimensions,
   TouchableOpacity,
   StatusBar,
+  SafeAreaView,
 } from 'react-native';
 
 //using android 6.0 marshmallow on android studio under sdk platforms
@@ -18,7 +19,7 @@ const FirstScreen = ({navigation}) => {
       <View
         style={{
           flexDirection: 'column',
-          height: windowHeight,
+          height: '100%',
           width: windowWidth,
           backgroundColor: 'white',
           flex: 1,

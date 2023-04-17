@@ -37,8 +37,6 @@ function SecondScreen() {
       <Text>This is the new screen!</Text>
       <Text>Nome</Text>
       <TextInput style={styles.input} />
-      <Text>R$/Quant(apenas numero)</Text>
-      <TextInput style={styles.input} />
       <TouchableOpacity style={styles.button} onPress={createTwoButtonAlert}>
         <Text>Entrar</Text>
       </TouchableOpacity>
