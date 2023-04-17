@@ -1,4 +1,3 @@
-import React, {useState} from 'react';
 import {
   Text,
   View,
@@ -13,23 +12,6 @@ import {
 //on sdktools android sdk build tools 34 rc3, android command line tools sdk (latest) android emulator 32.1.12 android platform tools 34.0.1
 
 const FirstScreen = ({navigation}) => {
-  const [textInputValue, setTextInputValue] = useState('')
-  const sendDatatoBackend = async () => {
-    try {
-      const response = await fetch('127.0.0.1:3001/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({data: textInputValue}),
-      });
-      const result = await response.json();
-      console.log('Success:', result);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
   return (
     <>
       <StatusBar hidden />
@@ -39,8 +21,6 @@ const FirstScreen = ({navigation}) => {
           height: windowHeight,
           width: windowWidth,
           backgroundColor: 'white',
-          borderColor: 'black',
-          borderWidth: 10,
           flex: 1,
         }}>
         <View style={styles.welcome}>
@@ -51,10 +31,6 @@ const FirstScreen = ({navigation}) => {
           <View style={styles.shadowProp}>
             <Image style={styles.login} source={require('./src/zeuslogo.png')} />
           </View>
-          {/* <Text style={styles.loginText}>Nome</Text>
-          <TextInput style={styles.input} />
-          <Text style={styles.loginText}>Senha</Text>
-          <TextInput style={styles.input} /> */}
           <TouchableOpacity style={styles.button}  onPress={() => navigation.navigate('SecondScreen')}>
             <Text style={styles.toTextStyle}>Entrar</Text>
           </TouchableOpacity>
