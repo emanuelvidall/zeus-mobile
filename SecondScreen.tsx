@@ -1,44 +1,36 @@
 import React from 'react';
 import {useState} from 'react';
-import {View, Text, StyleSheet, TextInput, Alert} from 'react-native';
+import {View, Text, StyleSheet, TextInput} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 function SecondScreen() {
-  const createTwoButtonAlert = () =>
-    Alert.alert('Alert Title', 'My Alert Msg', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-      {text: 'OK', onPress: () => console.log('OK Pressed')},
-    ]);
-
-  const [textInputValue, setTextInputValue] = useState('')
+  const [textInputValue, setTextInputValue] = useState('');
 
   const sendDatatoBackend = async () => {
     try {
-      const response = await fetch('127.0.0.1:3001/register', {
+      const response = await fetch('http://192.168.1.1:3001/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({data: textInputValue}),
+        body: JSON.stringify({name: textInputValue}),
       });
       const result = await response.json();
       console.log('Success:', result);
     } catch (error) {
       console.error('Error:', error);
+      console.log(JSON.stringify({name: textInputValue}));
     }
   };
 
   return (
-    <View>
-      <Text>This is the new screen!</Text>
-      <Text>Nome</Text>
-      <TextInput style={styles.input} />
-      <TouchableOpacity style={styles.button} onPress={createTwoButtonAlert}>
-        <Text>Entrar</Text>
+    <View style={styles.mainView}>
+      <Text>Adicione o Gasto! 💰</Text>
+      <TextInput style={styles.input} onChangeText={setTextInputValue} />
+      <TouchableOpacity style={styles.button} onPress={sendDatatoBackend}>
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <Text style={{textAlign: 'center'}}>Centered text</Text>
+        </View>
       </TouchableOpacity>
     </View>
   );
@@ -46,7 +38,7 @@ function SecondScreen() {
 
 const styles = StyleSheet.create({
   input: {
-    width: '100%',
+    width: '30%',
     height: 40,
     margin: 12,
     borderWidth: 1,
@@ -57,9 +49,13 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#16a83d',
     borderRadius: 5,
-    padding: 8,
+    padding: 2,
     width: 100,
     marginTop: 30,
+    height: 30,
+  },
+  mainView: {
+    alignItems: 'center',
   },
 });
 
