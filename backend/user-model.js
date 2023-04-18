@@ -1,7 +1,5 @@
-//iniciando schema de usermodel requiring mongoose e mongodb
-require('./database');
-
-var mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import {dbPromise} from './database.js';
 
 var userSchema = new mongoose.Schema({
   //setando formas de validacao do input para previnir dados sujos no db
@@ -13,5 +11,6 @@ var userSchema = new mongoose.Schema({
   },
 });
 
+const User = mongoose.model('User', userSchema);
 //registrando scheman com mongoose
-module.exports = User = mongoose.model('User', userSchema);
+export default User;

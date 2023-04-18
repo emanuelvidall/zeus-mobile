@@ -8,7 +8,7 @@ function SecondScreen() {
 
   const sendDatatoBackend = async () => {
     try {
-      const response = await fetch('http://192.168.1.1:3001/register', {
+      const response = await fetch('http://10.50.63.88:3001/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

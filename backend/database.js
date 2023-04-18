@@ -1,8 +1,20 @@
-const mongoose = require('mongoose');
+import {mongoose} from 'mongoose';
+import {config} from 'dotenv';
+config();
+import {MongoClient} from 'mongodb';
 
-const url = `mongodb+srv://emanuelvidalrm:${process.env.DATABASE_PASSWORD}@appzeusdb.lq9izu5.mongodb.net/?retryWrites=true&w=majority`;
+const dbPassword = process.env.DB_PASSWORD;
+
+const url = `mongodb+srv://emanuelvidalrm:${dbPassword}@appzeusdb.lq9izu5.mongodb.net/?retryWrites=true&w=majority`;
 
 mongoose.connect(url, {useNewUrlParser: true});
+
+async function connectToDatabase() {
+  const client = await MongoClient.connect(url);
+  return client.db('<database-name>');
+}
+
+const dbPromise = connectToDatabase();
 
 const connectionParams = {
   useNewUrlParser: true,
@@ -17,3 +29,5 @@ mongoose
   .catch(err => {
     console.error(`Error connecting to the database. \n${err}`);
   });
+
+export {dbPromise, connectToDatabase};
