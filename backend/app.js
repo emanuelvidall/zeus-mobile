@@ -81,7 +81,7 @@ app.post('/register', (req, res) => {
 app.get('/users', async (req1, res1) => {
   try {
     const users = await User.find();
-    const userNames = users.map(user => user.name);
+    const userNames = users.map(user => user);
     res1.json(userNames);
   } catch (error) {
     console.error(error);
