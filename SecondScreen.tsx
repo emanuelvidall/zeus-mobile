@@ -82,12 +82,17 @@ function SecondScreen() {
       <View>{renderUsuarios()}</View>
       <View style={styles.chartArea}>
         <View style={styles.Bar1}></View>
+        <View style={styles.Bar1}></View>
+        <View style={styles.Bar1}></View>
+        <View style={styles.Bar1}></View>
+        <View style={styles.Bar1}></View>
+        <View style={styles.Bar1}></View>
       </View>
     </View>
   );
 }
 
-const barHeight = 13;
+const barHeight = 55;
 
 const styles = StyleSheet.create({
   input: {
@@ -100,17 +105,23 @@ const styles = StyleSheet.create({
     borderColor: '#d8d8d8',
   },
   chartArea: {
-    height: 200,
-    width: 200,
-    backgroundColor: 'blue',
+    height: 150,
+    width: 350,
     marginTop: 20,
+    flexDirection: 'row',
+    alignContent: 'center',
+    justifyContent: 'space-evenly',
+    backgroundColor: 'blue',
+    borderWidth: 5,
   },
   Bar1: {
     height: barHeight,
-    width: 10,
+    width: 20,
     backgroundColor: 'green',
-    alignSelf: 'center',
-    verticalAlign: 'middle',
+    margin: 'auto',
+    alignSelf: 'flex-end',
+    borderTopStartRadius: 4,
+    borderTopEndRadius: 4,
   },
   area1: {
     height: 200,
