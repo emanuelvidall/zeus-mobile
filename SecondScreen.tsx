@@ -1,7 +1,9 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, TextInput, FlatList, StatusBar, Image} from 'react-native';
+import {View, Text, StyleSheet, TextInput, FlatList, StatusBar, Image, TouchableWithoutFeedback} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import FirstScreen from './FirstScreen';
 
 interface User {
   _id: string;
@@ -20,6 +22,17 @@ function SecondScreen() {
   const [totalcustos, setTotalCustos] = useState<Number>(0);
   const [dataFetched, setDataFetched] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+
+  // const Tab = createBottomTabNavigator();
+
+  // function MyTabs() {
+  //   return (
+  //     <Tab.Navigator>
+  //       <Tab.Screen name="Home" component={FirstScreen} />
+  //       <Tab.Screen name="Settings" component={FirstScreen} />
+  //     </Tab.Navigator>
+  //   );
+  // }
 
   useEffect(() => {
     setIsMounted(true);
@@ -52,57 +65,57 @@ function SecondScreen() {
     }
   };
 
-  const sendDatatoBackend = async () => {
-    try {
-      const response = await fetch('http://10.50.63.88:3001/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({name: textInputValue}),
-      });
-      const result = await response.json();
-      console.log('Success:', result);
-    } catch (error) {
-      console.error('Error:', error);
-      console.log(JSON.stringify({name: textInputValue}));
-    }
-  };
+  // const sendDatatoBackend = async () => {
+  //   try {
+  //     const response = await fetch('http://10.50.63.88:3001/register', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({name: textInputValue}),
+  //     });
+  //     const result = await response.json();
+  //     console.log('Success:', result);
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     console.log(JSON.stringify({name: textInputValue}));
+  //   }
+  // };
 
-  const getDataFromBackend = async () => {
-    try {
-      const response = await fetch('http://10.50.63.88:3001/users', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      console.log('Success GET');
-      const result = await response.json();
-      console.log('Elements: ', result);
-      setUsuarios(result);
-      setDataFetched(true);
-    } catch (error) {
-      console.error('Error:', error);
-      console.log('cannot GET');
-    }
-  };
+  // const getDataFromBackend = async () => {
+  //   try {
+  //     const response = await fetch('http://10.50.63.88:3001/users', {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //     });
+  //     console.log('Success GET');
+  //     const result = await response.json();
+  //     console.log('Elements: ', result);
+  //     setUsuarios(result);
+  //     setDataFetched(true);
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     console.log('cannot GET');
+  //   }
+  // };
 
-  console.log('Usuarios:', usuarios);
+  // console.log('Usuarios:', usuarios);
 
-  const renderUsuarios = () => {
-    if (!dataFetched) {
-      return null;
-    } else {
-      return (
-        <View>
-          {usuarios.map(item => {
-            return <Text key={item._id}>User: {item.name}</Text>;
-          })}
-        </View>
-      );
-    }
-  };
+  // const renderUsuarios = () => {
+  //   if (!dataFetched) {
+  //     return null;
+  //   } else {
+  //     return (
+  //       <View>
+  //         {usuarios.map(item => {
+  //           return <Text key={item._id}>User: {item.name}</Text>;
+  //         })}
+  //       </View>
+  //     );
+  //   }
+  // };
 
   // const renderTotalCost = () => {
   //   if (!dataFetched) {
@@ -132,9 +145,9 @@ function SecondScreen() {
           <Text style={styles.currentCostDesc}>seu gasto no mês atual:</Text>
           <Text style={styles.currentCostText}>R$ {totalcustos}</Text>
         </View>
-        <Text>Adicione o Gasto! 💰</Text>
-        <TextInput style={styles.input} onChangeText={setTextInputValue} />
-        <TouchableOpacity style={styles.button} onPress={sendDatatoBackend}>
+        {/* <Text>Adicione o Gasto! 💰</Text>
+        <TextInput style={styles.input} onChangeText={setTextInputValue} /> */}
+        {/* <TouchableOpacity style={styles.button} onPress={sendDatatoBackend}>
           <View style={{flex: 1, justifyContent: 'center'}}>
             <Text style={{textAlign: 'center', fontSize: 20}}>POST</Text>
           </View>
@@ -143,8 +156,11 @@ function SecondScreen() {
           <View style={{flex: 1, justifyContent: 'center'}}>
             <Text style={{flex: 1, textAlign: 'center', fontSize: 20}}>GET</Text>
           </View>
-        </TouchableOpacity>
-        <View>{renderUsuarios()}</View>
+        </TouchableOpacity> */}
+        {/* <View>{renderUsuarios()}</View> */}
+        <View style={styles.textoGrafico}>
+          <Text>Histórico de Gastos</Text>
+        </View>
         <View style={styles.chartArea}>
           <View style={styles.Bar1}></View>
           <View style={styles.Bar1}></View>
@@ -152,6 +168,13 @@ function SecondScreen() {
           <View style={styles.Bar1}></View>
           <View style={styles.Bar1}></View>
           <View style={styles.Bar1}></View>
+        </View>
+        <View style={styles.posiTO}>
+          <TouchableOpacity style={styles.buttonPlus}>
+            <View>
+              <Text style={styles.buttonText}>+</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </>
@@ -175,6 +198,31 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     width: '57%',
     alignItems: 'flex-end',
+  },
+  buttonPlus: {
+    backgroundColor: 'green',
+    borderRadius: 100,
+    width: 60,
+    height: 60,
+    bottom: 0,
+    paddingTop: 8,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  posiTO: {
+    marginTop: 'auto',
+  },
+  buttonText: {
+    fontSize: 30,
+    color: 'white',
+    textAlign: 'center',
+    margin: 'auto',
   },
   currentCost: {
     backgroundColor: 'green',
@@ -246,10 +294,13 @@ const styles = StyleSheet.create({
     padding: 2,
     width: 100,
     marginTop: 30,
-    height: 30,
+    height: '30',
   },
   mainView: {
     alignItems: 'center',
+    display: 'flex',
+    backgroundColor: 'purple',
+    height: '100%',
   },
 });
 
