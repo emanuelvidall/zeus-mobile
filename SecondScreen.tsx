@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, TextInput, FlatList} from 'react-native';
+import {View, Text, StyleSheet, TextInput, FlatList, StatusBar, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 interface User {
@@ -66,29 +66,35 @@ function SecondScreen() {
   };
 
   return (
-    <View style={styles.mainView}>
-      <Text>Adicione o Gasto! 💰</Text>
-      <TextInput style={styles.input} onChangeText={setTextInputValue} />
-      <TouchableOpacity style={styles.button} onPress={sendDatatoBackend}>
-        <View style={{flex: 1, justifyContent: 'center'}}>
-          <Text style={{textAlign: 'center', fontSize: 20}}>POST</Text>
+    <>
+      <View style={styles.mainView}>
+        <View style={styles.welcome1}>
+          <Text style={styles.welcome2}>Bem vindo,{'\n'}Fulano!</Text>
+          <Image style={styles.avatar} source={require('./avatar.jpeg')} />
         </View>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={getDataFromBackend}>
-        <View style={{flex: 1, justifyContent: 'center'}}>
-          <Text style={{flex: 1, textAlign: 'center', fontSize: 20}}>GET</Text>
+        <Text>Adicione o Gasto! 💰</Text>
+        <TextInput style={styles.input} onChangeText={setTextInputValue} />
+        <TouchableOpacity style={styles.button} onPress={sendDatatoBackend}>
+          <View style={{flex: 1, justifyContent: 'center'}}>
+            <Text style={{textAlign: 'center', fontSize: 20}}>POST</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={getDataFromBackend}>
+          <View style={{flex: 1, justifyContent: 'center'}}>
+            <Text style={{flex: 1, textAlign: 'center', fontSize: 20}}>GET</Text>
+          </View>
+        </TouchableOpacity>
+        <View>{renderUsuarios()}</View>
+        <View style={styles.chartArea}>
+          <View style={styles.Bar1}></View>
+          <View style={styles.Bar1}></View>
+          <View style={styles.Bar1}></View>
+          <View style={styles.Bar1}></View>
+          <View style={styles.Bar1}></View>
+          <View style={styles.Bar1}></View>
         </View>
-      </TouchableOpacity>
-      <View>{renderUsuarios()}</View>
-      <View style={styles.chartArea}>
-        <View style={styles.Bar1}></View>
-        <View style={styles.Bar1}></View>
-        <View style={styles.Bar1}></View>
-        <View style={styles.Bar1}></View>
-        <View style={styles.Bar1}></View>
-        <View style={styles.Bar1}></View>
       </View>
-    </View>
+    </>
   );
 }
 
@@ -103,6 +109,24 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 5,
     borderColor: '#d8d8d8',
+  },
+  avatar : {
+    height: 50,
+    width: 50,
+    borderRadius: 30,
+    alignSelf: 'baseline',
+  },
+  welcome1: {
+    alignSelf: 'flex-start',
+    display: 'flex',
+    flexDirection: 'row',
+    width: 400,
+    backgroundColor: 'red',
+  },
+  welcome2: {
+    fontSize: 32,
+    textAlign: 'left',
+    paddingLeft: 10,
   },
   chartArea: {
     height: 150,
