@@ -97,7 +97,7 @@ app.post('/novocusto', (req, res) => {
   // res.header('Access-Control-Allow-Origin', '*');
   console.log('incoming request body:', req.body);
   const newCost = new Cost({
-    preco: req.body.peso,
+    preco: req.body.preco,
     peso: req.body.peso,
   });
   console.log('new cost before save: ', newCost);

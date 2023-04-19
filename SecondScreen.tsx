@@ -17,7 +17,7 @@ interface Cost {
 function SecondScreen() {
   const [textInputValue, setTextInputValue] = useState('');
   const [usuarios, setUsuarios] = useState<User[]>([]);
-  const [custos, setCustos] = useState<Cost[]>([]);
+  const [totalcustos, setTotalCustos] = useState<Number>(0);
   const [dataFetched, setDataFetched] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -37,11 +37,15 @@ function SecondScreen() {
       });
       console.log('Success GET');
       const result = await response.json();
-      const custos = result.map(custo => custo.preco);
-      const soma = custos.reduce(total, custo) => total + custo, 0);
+      const precoArray: number[] = result.map((obj: Cost) => obj.preco);
+      const total: number = precoArray.reduce(
+        (accumulator: number, currentValue: number) =>
+        accumulator + currentValue,0);
+      setTotalCustos(total);
       console.log('Elements: ', result);
       setUsuarios(result);
       setDataFetched(true);
+      console.log('total dos custos', total);
     } catch (error) {
       console.error('Error:', error);
       console.log('cannot GET');
@@ -121,6 +125,7 @@ function SecondScreen() {
           <Text style={styles.welcome2}>Bem vindo,{'\n'}Fulano!</Text>
           <Image style={styles.avatar} source={require('./avatar.jpeg')} />
         </View>
+        {/* <Text>{totalcustos}</Text> */}
         <Text>Adicione o Gasto! 💰</Text>
         <TextInput style={styles.input} onChangeText={setTextInputValue} />
         <TouchableOpacity style={styles.button} onPress={sendDatatoBackend}>
