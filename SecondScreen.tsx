@@ -123,9 +123,15 @@ function SecondScreen() {
       <View style={styles.mainView}>
         <View style={styles.welcome1}>
           <Text style={styles.welcome2}>Bem vindo,{'\n'}Fulano!</Text>
-          <Image style={styles.avatar} source={require('./avatar.jpeg')} />
+          <View style={styles.avatarView}>
+            <Image style={styles.avatar} source={require('./avatar.jpeg')} />
+          </View>
         </View>
         {/* <Text>{totalcustos}</Text> */}
+        <View style={styles.currentCost}>
+          <Text style={styles.currentCostDesc}>seu gasto no mês atual:</Text>
+          <Text style={styles.currentCostText}>R$ {totalcustos}</Text>
+        </View>
         <Text>Adicione o Gasto! 💰</Text>
         <TextInput style={styles.input} onChangeText={setTextInputValue} />
         <TouchableOpacity style={styles.button} onPress={sendDatatoBackend}>
@@ -164,6 +170,25 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: '#d8d8d8',
   },
+  avatarView: {
+    backgroundColor: 'grey',
+    textAlign: 'right',
+    width: '57%',
+    alignItems: 'flex-end',
+  },
+  currentCost: {
+    backgroundColor: 'green',
+    width: '100%',
+  },
+  currentCostDesc: {
+    alignSelf: 'flex-start',
+    paddingLeft: 10,
+  },
+  currentCostText: {
+    fontWeight: '700',
+    fontSize: 45,
+    alignSelf: 'center',
+  },
   avatar: {
     height: 50,
     width: 50,
@@ -171,20 +196,20 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderWidth: 2,
     borderColor: '#e0e0e0',
+    alignSelf: 'auto',
+    marginRight: 10,
   },
   welcome1: {
     alignSelf: 'flex-start',
-    display: 'flex',
     flexDirection: 'row',
-    width: 400,
+    width: '100%',
     backgroundColor: 'red',
-    justifyContent: 'space-evenly',
+    paddingLeft: 8,
   },
   welcome2: {
     fontSize: 32,
     textAlign: 'left',
     alignSelf: 'flex-start',
-    backgroundColor: 'blue',
   },
   chartArea: {
     height: 150,
