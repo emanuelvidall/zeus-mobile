@@ -35,6 +35,21 @@ var userSchema = new mongoose.Schema({
   },
 });
 
+var costSchema = new mongoose.Schema({
+  preco: {
+    type: Number,
+    required: [true, 'nao pode ser vazio'],
+    index: true,
+  },
+  peso: {
+    type: Number,
+    required: [true, 'nao pode ser vazio'],
+    index: true,
+  },
+});
+
+const Cost = mongoose.model('Cost', costSchema);
+
 const User = mongoose.model('User', userSchema);
 
 const port = 3001;
@@ -78,6 +93,26 @@ app.post('/register', (req, res) => {
     });
 });
 
+app.post('/novocusto', (req, res) => {
+  // res.header('Access-Control-Allow-Origin', '*');
+  console.log('incoming request body:', req.body);
+  const newCost = new Cost({
+    preco: req.body.peso,
+    peso: req.body.peso,
+  });
+  console.log('new cost before save: ', newCost);
+
+  newCost
+    .save()
+    .then(savedCost => {
+      return res.status(200).json({msg: savedCost});
+    })
+    .catch(error => {
+      console.error('Error saving cost:', error);
+      return res.status(500).json({error: 'could not save'});
+    });
+});
+
 app.get('/users', async (req1, res1) => {
   try {
     const users = await User.find();
@@ -86,5 +121,16 @@ app.get('/users', async (req1, res1) => {
   } catch (error) {
     console.error(error);
     res1.status(500).json({error: 'Internal server error'});
+  }
+});
+
+app.get('/todoscustos', async (req2, res2) => {
+  try {
+    const custos = await Cost.find();
+    const todosCustos = custos.map(custo => custo);
+    res2.json(todosCustos);
+  } catch (error) {
+    console.error(error);
+    res2.status(500).json({error: 'Internal server error'});
   }
 });

@@ -8,10 +8,45 @@ interface User {
   name: string;
 }
 
+interface Cost {
+  _id: string;
+  preco: number;
+  peso: number;
+}
+
 function SecondScreen() {
   const [textInputValue, setTextInputValue] = useState('');
   const [usuarios, setUsuarios] = useState<User[]>([]);
+  const [custos, setCustos] = useState<Cost[]>([]);
   const [dataFetched, setDataFetched] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    getTotalCosts();
+    console.log('Component mounted');
+  }, []);
+
+  const getTotalCosts = async () => {
+    try {
+      const response = await fetch('http://10.50.63.88:3001/todoscustos', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log('Success GET');
+      const result = await response.json();
+      const custos = result.map(custo => custo.preco);
+      const soma = custos.reduce(total, custo) => total + custo, 0);
+      console.log('Elements: ', result);
+      setUsuarios(result);
+      setDataFetched(true);
+    } catch (error) {
+      console.error('Error:', error);
+      console.log('cannot GET');
+    }
+  };
 
   const sendDatatoBackend = async () => {
     try {
@@ -65,6 +100,20 @@ function SecondScreen() {
     }
   };
 
+  // const renderTotalCost = () => {
+  //   if (!dataFetched) {
+  //     return null;
+  //   } else {
+  //     return (
+  //       <View>
+  //         {custos.map(item => {
+  //           return <Text key={item._id}>{totalCost}</Text>;
+  //         })}
+  //       </View>
+  //     );
+  //   }
+  // };
+
   return (
     <>
       <View style={styles.mainView}>
@@ -110,11 +159,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: '#d8d8d8',
   },
-  avatar : {
+  avatar: {
     height: 50,
     width: 50,
+    marginTop: 15,
     borderRadius: 30,
-    alignSelf: 'baseline',
+    borderWidth: 2,
+    borderColor: '#e0e0e0',
   },
   welcome1: {
     alignSelf: 'flex-start',
@@ -122,11 +173,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: 400,
     backgroundColor: 'red',
+    justifyContent: 'space-evenly',
   },
   welcome2: {
     fontSize: 32,
     textAlign: 'left',
-    paddingLeft: 10,
+    alignSelf: 'flex-start',
+    backgroundColor: 'blue',
   },
   chartArea: {
     height: 150,
