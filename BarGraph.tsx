@@ -13,14 +13,15 @@ const BarGraph: React.FC<BarGraphProps> = ({size}) => {
         height: tamanho,
         width: 30,
         backgroundColor: 'white',
+        borderTopEndRadius: 7,
+        borderTopStartRadius: 7,
     },
   });
 
   return (
     <View>
-      <Text>BarGraph</Text>
       <View style={styles.barra}></View>
-      <Text>{tamanho}</Text>
+      <Text>{tamanho}/Mes</Text>
     </View>
   );
 };

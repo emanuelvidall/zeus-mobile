@@ -168,6 +168,10 @@ function SecondScreen() {
           <View style={styles.Bar1}></View>
           <View style={styles.Bar1}></View> */}
           <BarGraph size={10}/>
+          <BarGraph size={15}/>
+          <BarGraph size={3}/>
+          <BarGraph size={7}/>
+          <BarGraph size={11}/>
         </View>
         <View style={styles.posiTO}>
           <TouchableOpacity style={styles.buttonPlus}>
@@ -269,6 +273,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     backgroundColor: 'blue',
     borderWidth: 5,
+    alignItems: 'flex-end',
   },
   Bar1: {
     height: barHeight,
