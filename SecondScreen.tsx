@@ -2,9 +2,8 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, TextInput, FlatList, StatusBar, Image, TouchableWithoutFeedback} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import FirstScreen from './FirstScreen';
-
+import BarGraph from './BarGraph';
+// import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 interface User {
   _id: string;
   name: string;
@@ -162,12 +161,13 @@ function SecondScreen() {
           <Text>Histórico de Gastos</Text>
         </View>
         <View style={styles.chartArea}>
+          {/* <View style={styles.Bar1}></View>
           <View style={styles.Bar1}></View>
           <View style={styles.Bar1}></View>
           <View style={styles.Bar1}></View>
           <View style={styles.Bar1}></View>
-          <View style={styles.Bar1}></View>
-          <View style={styles.Bar1}></View>
+          <View style={styles.Bar1}></View> */}
+          <BarGraph size={10}/>
         </View>
         <View style={styles.posiTO}>
           <TouchableOpacity style={styles.buttonPlus}>
@@ -217,6 +217,7 @@ const styles = StyleSheet.create({
   },
   posiTO: {
     marginTop: 'auto',
+    borderRadius: 100,
   },
   buttonText: {
     fontSize: 30,
