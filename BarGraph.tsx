@@ -2,39 +2,35 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 import {Text, View, StyleSheet, Animated} from 'react-native';
 
-interface BarGraphProps {
-  size: number;
+interface rawData {
+  preco: number;
+  month: number;
 }
 
-const BarGraph: React.FC<BarGraphProps> = ({size}) => {
+const BarGraph = () => {
 
   const [animation] = useState(new Animated.Value(0));
 
-//   useEffect(() => {
-//   const timeoutId = setTimeout(() => {
-//     setBarSize(size);
-//   }, 2000);
-
-//   return () => {
-//     clearTimeout(timeoutId);
-//   };
-// }, [size]);
+  const size = 30;
 
   useEffect(() => {
     Animated.timing(animation, {
-        toValue: size * 4,
+        toValue: size * 2,
         duration: 1000,
         useNativeDriver: false,
     }).start();
   }, [size, animation]);
 
-
   const styles = StyleSheet.create({
     barra: {
         width: 30,
-        backgroundColor: 'white',
+        backgroundColor: 'blue',
         borderTopEndRadius: 7,
         borderTopStartRadius: 7,
+        marginLeft: 10,
+    },
+    labels: {
+        marginRight: 10,
     },
   });
 
@@ -46,7 +42,7 @@ const BarGraph: React.FC<BarGraphProps> = ({size}) => {
   return (
     <View>
       <Animated.View style={[styles.barra, barStyle]}></Animated.View>
-      <Text>{size}/Mes</Text>
+      <Text style={styles.labels}>{size}/Abril</Text>
     </View>
   );
 };

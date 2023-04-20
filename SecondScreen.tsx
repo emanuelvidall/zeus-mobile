@@ -169,11 +169,12 @@ function SecondScreen() {
           <View style={styles.Bar1}></View>
           <View style={styles.Bar1}></View>
           <View style={styles.Bar1}></View> */}
-          <BarGraph size={10}/>
-          <BarGraph size={15}/>
-          <BarGraph size={3}/>
-          <BarGraph size={7}/>
-          <BarGraph size={11}/>
+          <BarGraph/>
+          <BarGraph/>
+          <BarGraph/>
+          <BarGraph/>
+          <BarGraph/>
+          <BarGraph/>
         </View>
         <View style={styles.listArea}>
           <View style={styles.listHead}>
@@ -181,7 +182,9 @@ function SecondScreen() {
             <Text style={styles.listDateValor}>Descrição</Text>
             <Text style={styles.listDateValor}>Valor</Text>
           </View>
-          <Lista/>
+          <View style={styles.listItself}>
+            <Lista/>
+          </View>
         </View>
         <View style={styles.posiTO}>
           <TouchableOpacity style={styles.buttonPlus}>
@@ -207,6 +210,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: '#d8d8d8',
   },
+  listItself: {
+    backgroundColor: 'white',
+    height: '84%',
+    borderBottomStartRadius: 20,
+    borderBottomEndRadius: 20,
+    paddingBottom: 5,
+  },
   textoGrafico: {
     alignSelf: 'flex-start',
     paddingLeft: 10,
@@ -222,21 +232,30 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
-    backgroundColor: 'blue',
+    backgroundColor: 'white',
     justifyContent: 'space-between',
     marginBottom: 15,
   },
   listArea: {
     backgroundColor: 'white',
     height: '40%',
-    width: '100%',
+    width: '90%',
     paddingTop: 30,
     paddingBottom: 5,
     paddingLeft: 5,
     paddingRight: 5,
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 3,
   },
   avatarView: {
-    backgroundColor: 'grey',
+    backgroundColor: '#F7F9FA',
     textAlign: 'right',
     width: '57%',
     alignItems: 'flex-end',
@@ -268,7 +287,7 @@ const styles = StyleSheet.create({
     margin: 'auto',
   },
   currentCost: {
-    backgroundColor: 'green',
+    backgroundColor: '#F7F9FA',
     width: '100%',
   },
   currentCostDesc: {
@@ -295,7 +314,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     flexDirection: 'row',
     width: '100%',
-    backgroundColor: 'red',
+    backgroundColor: '#F7F9FA',
     paddingLeft: 8,
   },
   welcome2: {
@@ -306,20 +325,30 @@ const styles = StyleSheet.create({
   },
   chartArea: {
     height: 150,
-    width: 350,
+    width: '90%',
     marginTop: 5,
     marginBottom: 20,
     flexDirection: 'row',
     alignContent: 'center',
     justifyContent: 'space-evenly',
-    backgroundColor: 'blue',
-    borderWidth: 5,
     alignItems: 'flex-end',
+    backgroundColor: 'white',
+    paddingLeft: 9,
+    borderRadius: 20,
+    paddingBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 3,
   },
   Bar1: {
     height: barHeight,
     width: 20,
-    backgroundColor: 'green',
+    backgroundColor: '#F7F9FA',
     margin: 'auto',
     alignSelf: 'flex-end',
     borderTopStartRadius: 4,
@@ -328,7 +357,7 @@ const styles = StyleSheet.create({
   area1: {
     height: 200,
     width: 200,
-    backgroundColor: 'red',
+    backgroundColor: '#F7F9FA',
   },
   render: {
     color: 'black',
@@ -346,7 +375,7 @@ const styles = StyleSheet.create({
   mainView: {
     alignItems: 'center',
     display: 'flex',
-    backgroundColor: 'purple',
+    backgroundColor: '#F7F9FA',
     height: '100%',
   },
 });

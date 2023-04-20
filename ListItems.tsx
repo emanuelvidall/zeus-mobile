@@ -52,16 +52,20 @@ export const Lista: React.FC<ListaProps> = () => {
 
   const styles = StyleSheet.create({
     lista: {
-        backgroundColor: 'red',
+        backgroundColor: 'white',
         marginBottom: 5,
         fontSize: 35,
         justifyContent: 'space-between',
         display: 'flex',
         flexDirection: 'row',
         height: 60,
+        alignItems: 'flex-end',
+        paddingBottom: 20,
+        width: '100%',
     },
     desc: {
-        marginRight: 20,
+        marginRight: 30,
+        textAlign: 'center',
     },
     separator: {
         alignSelf: 'center',
@@ -70,6 +74,7 @@ export const Lista: React.FC<ListaProps> = () => {
         marginBottom: 3,
         backgroundColor: 'grey',
         opacity: 0.2,
+        textAlign: 'center',
     },
   });
 
