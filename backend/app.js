@@ -46,6 +46,11 @@ var costSchema = new mongoose.Schema({
     required: [true, 'nao pode ser vazio'],
     index: true,
   },
+  date: {
+    type: String,
+    required: [true, 'nao pode ser vazio'],
+    index: true,
+  },
 });
 
 const Cost = mongoose.model('Cost', costSchema);
@@ -95,10 +100,16 @@ app.post('/register', (req, res) => {
 
 app.post('/novocusto', (req, res) => {
   // res.header('Access-Control-Allow-Origin', '*');
+  const currentDate = new Date();
+  const day = currentDate.getDate().toString().padStart(2, '0');
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+  const year = currentDate.getFullYear().toString();
+  const formattedDate = `${day}-${month}-${year}`;
   console.log('incoming request body:', req.body);
   const newCost = new Cost({
     preco: req.body.preco,
     peso: req.body.peso,
+    date: formattedDate,
   });
   console.log('new cost before save: ', newCost);
 
