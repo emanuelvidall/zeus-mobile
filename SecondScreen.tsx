@@ -41,7 +41,7 @@ function SecondScreen() {
 
   const getTotalCosts = async () => {
     try {
-      const response = await fetch('http://10.50.63.88:3001/todoscustos', {
+      const response = await fetch('http://10.50.63.108:3001/todoscustos', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
