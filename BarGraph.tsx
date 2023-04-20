@@ -24,7 +24,7 @@ const BarGraph = () => {
   const styles = StyleSheet.create({
     barra: {
         width: 30,
-        backgroundColor: 'blue',
+        backgroundColor: '#5390D9',
         borderTopEndRadius: 7,
         borderTopStartRadius: 7,
         marginLeft: 10,

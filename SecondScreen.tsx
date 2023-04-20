@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, TextInput, FlatList, StatusBar, Image, TouchableWithoutFeedback} from 'react-native';
+import {View, Text, StyleSheet, TextInput, FlatList, Image, TouchableWithoutFeedback} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import BarGraph from './BarGraph';
 import {Lista} from './ListItems';
@@ -133,7 +133,6 @@ function SecondScreen() {
 
   return (
     <>
-      <StatusBar hidden={true} translucent={true} />
       <View style={styles.mainView}>
         <View style={styles.welcome1}>
           <Text style={styles.welcome2}>Bem vindo,{'\n'}Fulano!</Text>
@@ -211,11 +210,12 @@ const styles = StyleSheet.create({
     borderColor: '#d8d8d8',
   },
   listItself: {
-    backgroundColor: 'white',
+    backgroundColor: 'red',
     height: '84%',
     borderBottomStartRadius: 10,
     borderBottomEndRadius: 10,
     paddingBottom: 5,
+    width: '100%',
   },
   textoGrafico: {
     alignSelf: 'flex-start',
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   buttonPlus: {
-    backgroundColor: 'green',
+    backgroundColor: '#5390D9',
     borderRadius: 100,
     width: 60,
     height: 60,

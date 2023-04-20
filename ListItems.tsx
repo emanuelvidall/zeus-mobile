@@ -37,7 +37,7 @@ export const Lista: React.FC<ListaProps> = () => {
 
   const renderItem = ({item}: { item: ListItem}) => {
     return (
-        <TouchableOpacity onPress={() => onPressItem(item)}>
+        <TouchableOpacity style={styles.touch} onPress={() => onPressItem(item)}>
             <View style={styles.lista}>
                 <Text>{item.date}</Text>
                 <Text style={styles.desc}>{item.desc}</Text>
@@ -63,6 +63,10 @@ export const Lista: React.FC<ListaProps> = () => {
         paddingBottom: 20,
         width: '100%',
     },
+    touch: {
+        backgroundColor: 'green',
+        width: '100%',
+    },
     desc: {
         marginRight: 30,
         textAlign: 'center',
@@ -79,7 +83,7 @@ export const Lista: React.FC<ListaProps> = () => {
   });
 
   return (
-    <ScrollView>
+    <ScrollView horizontal={true}>
         <FlatList data={data} renderItem={renderItem}/>
     </ScrollView>
   );

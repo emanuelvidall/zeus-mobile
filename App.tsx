@@ -4,6 +4,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import FirstScreen from './FirstScreen';
 import SecondScreen from './SecondScreen';
 
+//color palette: https://coolors.co/palette/7400b8-6930c3-5e60ce-5390d9-4ea8de-48bfe3-56cfe1-64dfdf-72efdd-80ffdb
+
 const Stack = createStackNavigator();
 
 function App() {
