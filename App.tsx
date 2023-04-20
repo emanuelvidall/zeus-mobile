@@ -17,7 +17,9 @@ function App() {
             headerShown: false,
           }}
         />
-        <Stack.Screen name="SecondScreen" component={SecondScreen} />
+        <Stack.Screen name="SecondScreen" component={SecondScreen} options={{
+            headerShown: false,
+          }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

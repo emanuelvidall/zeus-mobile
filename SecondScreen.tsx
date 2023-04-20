@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, TextInput, FlatList, StatusBar, Image, TouchableWithoutFeedback} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import BarGraph from './BarGraph';
+import {Lista} from './ListItems';
 // import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 interface User {
   _id: string;
@@ -132,6 +133,7 @@ function SecondScreen() {
 
   return (
     <>
+      <StatusBar hidden={true} translucent={true} />
       <View style={styles.mainView}>
         <View style={styles.welcome1}>
           <Text style={styles.welcome2}>Bem vindo,{'\n'}Fulano!</Text>
@@ -141,7 +143,7 @@ function SecondScreen() {
         </View>
         {/* <Text>{totalcustos}</Text> */}
         <View style={styles.currentCost}>
-          <Text style={styles.currentCostDesc}>seu gasto no mês atual:</Text>
+          <Text style={styles.currentCostDesc}>Seu gasto no mês atual:</Text>
           <Text style={styles.currentCostText}>R$ {totalcustos}</Text>
         </View>
         {/* <Text>Adicione o Gasto! 💰</Text>
@@ -157,8 +159,8 @@ function SecondScreen() {
           </View>
         </TouchableOpacity> */}
         {/* <View>{renderUsuarios()}</View> */}
-        <View style={styles.textoGrafico}>
-          <Text>Histórico de Gastos</Text>
+        <View>
+          <Text style={styles.textoGrafico}>Histórico de Gastos</Text>
         </View>
         <View style={styles.chartArea}>
           {/* <View style={styles.Bar1}></View>
@@ -180,6 +182,14 @@ function SecondScreen() {
             </View>
           </TouchableOpacity>
         </View>
+        <View style={styles.listArea}>
+          <View style={styles.listHead}>
+            <Text style={styles.listDateValor}>Data</Text>
+            <Text style={styles.listDateValor}>Descrição</Text>
+            <Text style={styles.listDateValor}>Valor</Text>
+          </View>
+          <Lista/>
+        </View>
       </View>
     </>
   );
@@ -196,6 +206,34 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 5,
     borderColor: '#d8d8d8',
+  },
+  textoGrafico: {
+    alignSelf: 'flex-start',
+    paddingLeft: 10,
+    fontFamily: 'NotoSans-Light',
+  },
+  listDateValor: {
+    fontSize: 19,
+    paddingLeft: 10,
+    paddingRight: 10,
+    fontFamily: 'NotoSans-Light',
+  },
+  listHead: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    backgroundColor: 'blue',
+    justifyContent: 'space-between',
+    marginBottom: 15,
+  },
+  listArea: {
+    backgroundColor: 'white',
+    height: '40%',
+    width: '100%',
+    paddingTop: 30,
+    paddingBottom: 5,
+    paddingLeft: 5,
+    paddingRight: 5,
   },
   avatarView: {
     backgroundColor: 'grey',
@@ -236,9 +274,10 @@ const styles = StyleSheet.create({
   currentCostDesc: {
     alignSelf: 'flex-start',
     paddingLeft: 10,
+    fontFamily: 'NotoSans-Light',
   },
   currentCostText: {
-    fontWeight: '700',
+    fontFamily: 'NotoSans-Bold',
     fontSize: 45,
     alignSelf: 'center',
   },
@@ -263,6 +302,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     textAlign: 'left',
     alignSelf: 'flex-start',
+    fontFamily: 'NotoSans-Light',
   },
   chartArea: {
     height: 150,

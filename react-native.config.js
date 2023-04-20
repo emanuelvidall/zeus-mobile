@@ -3,5 +3,5 @@ module.exports = {
     ios: {},
     android: {},
   },
-  assets: ['./assets'], // Replace './assets' with the path to your asset directory.
+  assets: ['./assets/fonts'], // Replace './assets' with the path to your asset directory.
 };
