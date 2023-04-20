@@ -213,8 +213,8 @@ const styles = StyleSheet.create({
   listItself: {
     backgroundColor: 'white',
     height: '84%',
-    borderBottomStartRadius: 20,
-    borderBottomEndRadius: 20,
+    borderBottomStartRadius: 10,
+    borderBottomEndRadius: 10,
     paddingBottom: 5,
   },
   textoGrafico: {
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     paddingLeft: 5,
     paddingRight: 5,
-    borderRadius: 20,
+    borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -266,6 +266,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     bottom: 0,
+    marginBottom: 3,
     paddingTop: 8,
     shadowColor: '#000',
     shadowOffset: {
@@ -334,7 +335,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     backgroundColor: 'white',
     paddingLeft: 9,
-    borderRadius: 20,
+    borderRadius: 10,
     paddingBottom: 10,
     shadowColor: '#000',
     shadowOffset: {
