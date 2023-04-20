@@ -175,13 +175,6 @@ function SecondScreen() {
           <BarGraph size={7}/>
           <BarGraph size={11}/>
         </View>
-        <View style={styles.posiTO}>
-          <TouchableOpacity style={styles.buttonPlus}>
-            <View>
-              <Text style={styles.buttonText}>+</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
         <View style={styles.listArea}>
           <View style={styles.listHead}>
             <Text style={styles.listDateValor}>Data</Text>
@@ -189,6 +182,13 @@ function SecondScreen() {
             <Text style={styles.listDateValor}>Valor</Text>
           </View>
           <Lista/>
+        </View>
+        <View style={styles.posiTO}>
+          <TouchableOpacity style={styles.buttonPlus}>
+            <View>
+              <Text style={styles.buttonText}>+</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </>
@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#e0e0e0',
     alignSelf: 'auto',
-    marginRight: 10,
+    marginRight: 15,
   },
   welcome1: {
     alignSelf: 'flex-start',
@@ -307,7 +307,8 @@ const styles = StyleSheet.create({
   chartArea: {
     height: 150,
     width: 350,
-    marginTop: 20,
+    marginTop: 5,
+    marginBottom: 20,
     flexDirection: 'row',
     alignContent: 'center',
     justifyContent: 'space-evenly',

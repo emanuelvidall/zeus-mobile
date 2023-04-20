@@ -8,7 +8,9 @@ interface ListItem {
   id: string;
   preco: number;
   date: string;
+  desc: string;
 }
+
 
 interface ListaProps {}
 
@@ -38,6 +40,7 @@ export const Lista: React.FC<ListaProps> = () => {
         <TouchableOpacity onPress={() => onPressItem(item)}>
             <View style={styles.lista}>
                 <Text>{item.date}</Text>
+                <Text style={styles.desc}>{item.desc}</Text>
                 <Text>R${item.preco}</Text>
             </View>
             <View>
@@ -50,11 +53,15 @@ export const Lista: React.FC<ListaProps> = () => {
   const styles = StyleSheet.create({
     lista: {
         backgroundColor: 'red',
-        marginBottom: 20,
+        marginBottom: 5,
         fontSize: 35,
         justifyContent: 'space-between',
         display: 'flex',
         flexDirection: 'row',
+        height: 60,
+    },
+    desc: {
+        marginRight: 20,
     },
     separator: {
         alignSelf: 'center',

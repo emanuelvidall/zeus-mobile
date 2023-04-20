@@ -56,6 +56,11 @@ var costSchema = new mongoose.Schema({
     required: [true, 'nao pode ser vazio'],
     index: true,
   },
+  month: {
+    type: Number,
+    required: [true, 'nao pode ser vazio'],
+    index: true,
+  },
 });
 
 const Cost = mongoose.model('Cost', costSchema);
@@ -116,6 +121,7 @@ app.post('/novocusto', (req, res) => {
     peso: req.body.peso,
     desc: req.body.desc,
     date: formattedDate,
+    month: month,
   });
   console.log('new cost before save: ', newCost);
 
