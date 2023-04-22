@@ -72,6 +72,30 @@
     {
       "path": "assets/fonts/NotoSans-ThinItalic.ttf",
       "sha1": "299fcd7af422d6c1b869fdf5ffa1bc0f78ba4a00"
+    },
+    {
+      "path": "assets/fonts/ReadexPro-Bold.ttf",
+      "sha1": "70df2f9da556eec3f07cd1538df09a9b30ab51cf"
+    },
+    {
+      "path": "assets/fonts/ReadexPro-ExtraLight.ttf",
+      "sha1": "fa6e69fce2697cc89e4d8b40f0e08ecf26acb6f6"
+    },
+    {
+      "path": "assets/fonts/ReadexPro-Light.ttf",
+      "sha1": "f7fbad0367ce251e6847528857b771e5a4923c75"
+    },
+    {
+      "path": "assets/fonts/ReadexPro-Medium.ttf",
+      "sha1": "1afe5cc1171cc51c53a4d1c2aa188e544e78e7c1"
+    },
+    {
+      "path": "assets/fonts/ReadexPro-Regular.ttf",
+      "sha1": "fcd1db496dcf7a859598b81fb318cf2080b45d7c"
+    },
+    {
+      "path": "assets/fonts/ReadexPro-SemiBold.ttf",
+      "sha1": "df98f1509e31d84a4b19cc861b0bcb1e78cab34e"
     }
   ]
 }

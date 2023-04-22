@@ -23,27 +23,39 @@ const BarGraph = () => {
 
   const styles = StyleSheet.create({
     barra: {
-        width: 30,
+        width: 10,
         backgroundColor: '#5390D9',
         borderTopEndRadius: 7,
         borderTopStartRadius: 7,
         marginLeft: 10,
+        position: 'absolute',
+        top: 55.32,
+        left: 20,
     },
     labels: {
         marginRight: 10,
+    },
+    labelscont: {
+      marginTop: 1,
+      alignItems: 'center',
+      alignSelf: 'center',
+      alignContent: 'center',
+      backgroundColor: 'white',
+      width: '100%',
     },
   });
 
   const barStyle = {
     height: animation,
-    width: 30,
   };
 
   return (
-    <View>
+    <>
       <Animated.View style={[styles.barra, barStyle]}></Animated.View>
-      <Text style={styles.labels}>{size}/Abril</Text>
-    </View>
+      <View style={styles.labelscont}>
+        <Text style={styles.labels}>{size}/Abril</Text>
+      </View>
+    </>
   );
 };
 

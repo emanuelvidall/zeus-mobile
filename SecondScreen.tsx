@@ -4,6 +4,7 @@ import {View, Text, StyleSheet, TextInput, FlatList, Image, TouchableWithoutFeed
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import BarGraph from './BarGraph';
 import {Lista} from './ListItems';
+import CurrentDate from './CurrentDate';
 // import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 interface User {
   _id: string;
@@ -42,7 +43,7 @@ function SecondScreen() {
 
   const getTotalCosts = async () => {
     try {
-      const response = await fetch('http://10.50.63.108:3001/todoscustos', {
+      const response = await fetch('http://192.168.31.96:3001/todoscustos', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -136,6 +137,7 @@ function SecondScreen() {
       <View style={styles.mainView}>
         <View style={styles.welcome1}>
           <Text style={styles.welcome2}>Bem vindo,{'\n'}Fulano!</Text>
+          <CurrentDate/>
           <View style={styles.avatarView}>
             <Image style={styles.avatar} source={require('./avatar.jpeg')} />
           </View>
@@ -168,19 +170,29 @@ function SecondScreen() {
           <View style={styles.Bar1}></View>
           <View style={styles.Bar1}></View>
           <View style={styles.Bar1}></View> */}
-          <BarGraph/>
-          <BarGraph/>
-          <BarGraph/>
-          <BarGraph/>
-          <BarGraph/>
-          <BarGraph/>
-        </View>
-        <View style={styles.listArea}>
-          <View style={styles.listHead}>
-            <Text style={styles.listDateValor}>Data</Text>
-            <Text style={styles.listDateValor}>Descrição</Text>
-            <Text style={styles.listDateValor}>Valor</Text>
+          <View style={styles.chartArea2}>
+            <View style={styles.barraBody}></View>
+            <BarGraph/>
           </View>
+          <View style={styles.chartArea2}>
+            <View style={styles.barraBody}></View>
+            <BarGraph/>
+          </View>
+          <View style={styles.chartArea2}>
+            <View style={styles.barraBody}></View>
+            <BarGraph/>
+          </View>
+          <View style={styles.chartArea2}>
+            <View style={styles.barraBody}></View>
+            <BarGraph/>
+          </View>
+          <View style={styles.chartArea2}>
+            <View style={styles.barraBody}></View>
+            <BarGraph/>
+          </View>
+        </View>
+        <Text style={styles.transacoes}>Transações</Text>
+        <View style={styles.listArea}>
           <View style={styles.listItself}>
             <Lista/>
           </View>
@@ -209,13 +221,31 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: '#d8d8d8',
   },
+  transacoes: {
+    fontFamily: 'ReadexPro-Medium',
+    color: '#00160A',
+    fontSize: 16,
+  },
+  chartArea2: {
+    position: 'relative',
+    backgroundColor: 'white',
+    alignItems: 'center',
+    paddingRight: 9,
+    maxHeight: '100%',
+  },
+  barraBody: {
+    width: 10,
+    backgroundColor: 'grey',
+    borderTopEndRadius: 7,
+    borderTopStartRadius: 7,
+    marginLeft: 10,
+    height: '100%',
+  },
   listItself: {
-    backgroundColor: 'red',
+    backgroundColor: '#F6F6F6',
     height: '84%',
-    borderBottomStartRadius: 10,
-    borderBottomEndRadius: 10,
-    paddingBottom: 5,
     width: '100%',
+    alignItems: 'center',
   },
   textoGrafico: {
     alignSelf: 'flex-start',
@@ -237,25 +267,17 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   listArea: {
-    backgroundColor: 'white',
+    backgroundColor: '#F6F6F6',
     height: '40%',
     width: '90%',
     paddingTop: 30,
     paddingBottom: 5,
     paddingLeft: 5,
     paddingRight: 5,
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 3,
+    borderRadius: 20,
   },
   avatarView: {
-    backgroundColor: '#F7F9FA',
+    backgroundColor: '#F6F6F6',
     textAlign: 'right',
     width: '57%',
     alignItems: 'flex-end',
@@ -288,18 +310,20 @@ const styles = StyleSheet.create({
     margin: 'auto',
   },
   currentCost: {
-    backgroundColor: '#F7F9FA',
+    backgroundColor: '#F6F6F6',
     width: '100%',
   },
   currentCostDesc: {
     alignSelf: 'flex-start',
     paddingLeft: 10,
-    fontFamily: 'NotoSans-Light',
+    fontFamily: 'ReadexPro-Medium',
+    color: '#00160A',
   },
   currentCostText: {
-    fontFamily: 'NotoSans-Bold',
+    fontFamily: 'ReadexPro-Medium',
     fontSize: 45,
     alignSelf: 'center',
+    color: '#1D2A30',
   },
   avatar: {
     height: 50,
@@ -315,7 +339,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     flexDirection: 'row',
     width: '100%',
-    backgroundColor: '#F7F9FA',
+    backgroundColor: '#F6F6F6',
     paddingLeft: 8,
   },
   welcome2: {
@@ -334,17 +358,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'flex-end',
     backgroundColor: 'white',
-    paddingLeft: 9,
-    borderRadius: 10,
-    paddingBottom: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 3,
+    paddingLeft: 10,
+    borderRadius: 20,
+    paddingBottom: 25,
+    paddingTop: 10,
+    paddingRight: 20,
   },
   Bar1: {
     height: barHeight,
@@ -358,7 +376,7 @@ const styles = StyleSheet.create({
   area1: {
     height: 200,
     width: 200,
-    backgroundColor: '#F7F9FA',
+    backgroundColor: '#F6F6F6',
   },
   render: {
     color: 'black',
@@ -376,7 +394,7 @@ const styles = StyleSheet.create({
   mainView: {
     alignItems: 'center',
     display: 'flex',
-    backgroundColor: '#F7F9FA',
+    backgroundColor: '#F6F6F6',
     height: '100%',
   },
 });

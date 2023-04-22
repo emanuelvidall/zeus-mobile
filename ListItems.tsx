@@ -1,6 +1,5 @@
 import React from 'react';
-import {Text, View, FlatList, StyleSheet, ScrollView} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {Text, FlatList, StyleSheet, ScrollView, Pressable} from 'react-native';
 import {useState, useEffect} from 'react';
 import moment from 'moment';
 
@@ -18,7 +17,7 @@ export const Lista: React.FC<ListaProps> = () => {
     const [data, setData] = useState<ListItem[]>([]);
 
     useEffect(() => {
-        fetch('http://10.50.63.108:3001/todoscustos')
+        fetch('http://192.168.31.96:3001/todoscustos')
         .then((response) => response.json())
         .then((json) => {
             const sortedData = json.sort((a, b) => {
@@ -35,49 +34,36 @@ export const Lista: React.FC<ListaProps> = () => {
     console.log('Pressed item:', item);
   };
 
-  const renderItem = ({item}: { item: ListItem}) => {
+  const renderItem = ({item}: {item: ListItem}) => {
     return (
-        <TouchableOpacity style={styles.touch} onPress={() => onPressItem(item)}>
-            <View style={styles.lista}>
-                <Text>{item.date}</Text>
-                <Text style={styles.desc}>{item.desc}</Text>
-                <Text>R${item.preco}</Text>
-            </View>
-            <View>
-                <View style={styles.separator}></View>
-            </View>
-        </TouchableOpacity>
+        <Pressable style={styles.lista} onPress={() => onPressItem(item)}>
+            <Text>{item.date}</Text>
+            <Text style={styles.desc}>{item.desc}</Text>
+            <Text>R${item.preco}</Text>
+        </Pressable>
     );
   };
 
   const styles = StyleSheet.create({
     lista: {
         backgroundColor: 'white',
-        marginBottom: 5,
         fontSize: 35,
         justifyContent: 'space-between',
         display: 'flex',
         flexDirection: 'row',
         height: 60,
+        marginBottom: 30,
         alignItems: 'flex-end',
         paddingBottom: 20,
         width: '100%',
-    },
-    touch: {
-        backgroundColor: 'green',
-        width: '100%',
+        borderRadius: 20,
+        paddingRight: 20,
+        borderStyle: 'solid',
+        borderColor: 'black',
+        borderWidth: 2,
     },
     desc: {
         marginRight: 30,
-        textAlign: 'center',
-    },
-    separator: {
-        alignSelf: 'center',
-        width: '88%',
-        height: 2,
-        marginBottom: 3,
-        backgroundColor: 'grey',
-        opacity: 0.2,
         textAlign: 'center',
     },
   });
