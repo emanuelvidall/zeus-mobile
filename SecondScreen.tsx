@@ -11,6 +11,7 @@ interface User {
   name: string;
 }
 
+
 interface Cost {
   _id: string;
   preco: number;
@@ -43,7 +44,7 @@ function SecondScreen() {
 
   const getTotalCosts = async () => {
     try {
-      const response = await fetch('http://192.168.31.96:3001/todoscustos', {
+      const response = await fetch('http://192.168.0.88:3001/todoscustos', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -136,15 +137,26 @@ function SecondScreen() {
     <>
       <View style={styles.mainView}>
         <View style={styles.welcome1}>
-          <Text style={styles.welcome2}>Bem vindo,{'\n'}Fulano!</Text>
           <CurrentDate/>
-          <View style={styles.avatarView}>
+          {/* <View style={styles.avatarView}>
             <Image style={styles.avatar} source={require('./avatar.jpeg')} />
-          </View>
+          </View> */}
         </View>
         {/* <Text>{totalcustos}</Text> */}
+        <View style={styles.dog1}>
+          <View style={styles.dog1Texto}>
+            <Text style={styles.dog1Nome}>Nome</Text>
+            <Text style={styles.dog1Peso}>Peso</Text>
+            <Text style={styles.dog1Idade}>Idade</Text>
+            <Text style={styles.dog1Idade}>Raça</Text>
+            <Text style={styles.dog1Desc}>Descrição</Text>
+          </View>
+          <View style={styles.dog1Foto}>
+            <Image source={require('./src/dog1.png')} style={styles.dogavatar}></Image>
+          </View>
+        </View>
         <View style={styles.currentCost}>
-          <Text style={styles.currentCostDesc}>Seu gasto no mês atual:</Text>
+          <Text style={styles.currentCostDesc}>Seu gasto no mês com CACHORRO1 foi:</Text>
           <Text style={styles.currentCostText}>R$ {totalcustos}</Text>
         </View>
         {/* <Text>Adicione o Gasto! 💰</Text>
@@ -221,6 +233,48 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: '#d8d8d8',
   },
+  dog1Nome: {
+    color: 'white',
+    fontFamily: 'ReadexPro-Medium',
+    fontSize: 32,
+  },
+  dog1Peso: {
+    color: 'white',
+    fontFamily: 'ReadexPro-Regular',
+    fontSize: 12,
+  },
+  dog1Idade: {
+    color: 'white',
+    fontFamily: 'ReadexPro-Regular',
+    fontSize: 12,
+  },
+  dog1Desc: {
+    color: 'white',
+    fontFamily: 'ReadexPro-Regular',
+    fontSize: 10,
+  },
+  dog1: {
+    backgroundColor: '#1D2A30',
+    width: 320,
+    height: 160,
+    borderRadius: 10,
+    flexDirection: 'row',
+    display: 'flex',
+    padding: 10,
+    marginBottom: 10,
+  },
+  dog1Foto: {
+    backgroundColor: '#28343c',
+    borderRadius: 10,
+    width: '50%',
+    marginLeft: 'auto',
+  },
+  dogavatar: {
+    width: 80,
+    height: 80,
+    borderRadius: 10,
+    marginLeft: 'auto',
+  },
   transacoes: {
     fontFamily: 'ReadexPro-Medium',
     color: '#00160A',
@@ -250,13 +304,14 @@ const styles = StyleSheet.create({
   textoGrafico: {
     alignSelf: 'flex-start',
     paddingLeft: 10,
-    fontFamily: 'NotoSans-Light',
+    fontFamily: 'ReadexPro-Medium',
+    color: '#00160A',
   },
   listDateValor: {
     fontSize: 19,
     paddingLeft: 10,
     paddingRight: 10,
-    fontFamily: 'NotoSans-Light',
+    fontFamily: 'ReadexPro-Regular',
   },
   listHead: {
     display: 'flex',
@@ -341,12 +396,13 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#F6F6F6',
     paddingLeft: 8,
+    marginBottom: 10,
   },
   welcome2: {
     fontSize: 32,
     textAlign: 'left',
     alignSelf: 'flex-start',
-    fontFamily: 'NotoSans-Light',
+    fontFamily: 'ReadexPro-Regular',
   },
   chartArea: {
     height: 150,

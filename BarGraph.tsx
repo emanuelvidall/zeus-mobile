@@ -30,10 +30,13 @@ const BarGraph = () => {
         marginLeft: 10,
         position: 'absolute',
         top: 55.32,
-        left: 20,
+        left: 22.3,
     },
     labels: {
         marginRight: 10,
+        fontFamily: 'ReadexPro-Regular',
+        color: 'grey',
+        borderRadius: 10,
     },
     labelscont: {
       marginTop: 1,
@@ -42,6 +45,8 @@ const BarGraph = () => {
       alignContent: 'center',
       backgroundColor: 'white',
       width: '100%',
+      borderRadius: 10,
+      height: 19,
     },
   });
 

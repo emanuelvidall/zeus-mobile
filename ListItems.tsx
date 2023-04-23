@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, FlatList, StyleSheet, ScrollView, Pressable} from 'react-native';
+import {Text, FlatList, StyleSheet, ScrollView, Pressable, View} from 'react-native';
 import {useState, useEffect} from 'react';
 import moment from 'moment';
 
@@ -17,7 +17,7 @@ export const Lista: React.FC<ListaProps> = () => {
     const [data, setData] = useState<ListItem[]>([]);
 
     useEffect(() => {
-        fetch('http://192.168.31.96:3001/todoscustos')
+        fetch('http://192.168.0.88:3001/todoscustos')
         .then((response) => response.json())
         .then((json) => {
             const sortedData = json.sort((a, b) => {
@@ -36,10 +36,19 @@ export const Lista: React.FC<ListaProps> = () => {
 
   const renderItem = ({item}: {item: ListItem}) => {
     return (
-        <Pressable style={styles.lista} onPress={() => onPressItem(item)}>
-            <Text>{item.date}</Text>
-            <Text style={styles.desc}>{item.desc}</Text>
-            <Text>R${item.preco}</Text>
+        <Pressable onPress={() => onPressItem(item)}>
+            <View style={styles.lista} >
+              <View style={styles.foto}></View>
+              <View style={styles.right}>
+                <View style={styles.descdate}>
+                  <Text style={styles.desc}>{item.desc}</Text>
+                  <Text style={styles.date}>{item.date}</Text>
+                </View>
+                <View style={styles.precoView}>
+                  <Text style={styles.preco}>R${item.preco.toFixed(2)}</Text>
+                </View>
+              </View>
+            </View>
         </Pressable>
     );
   };
@@ -48,23 +57,49 @@ export const Lista: React.FC<ListaProps> = () => {
     lista: {
         backgroundColor: 'white',
         fontSize: 35,
-        justifyContent: 'space-between',
         display: 'flex',
         flexDirection: 'row',
         height: 60,
         marginBottom: 30,
-        alignItems: 'flex-end',
-        paddingBottom: 20,
         width: '100%',
         borderRadius: 20,
-        paddingRight: 20,
-        borderStyle: 'solid',
-        borderColor: 'black',
-        borderWidth: 2,
+        paddingTop: 5,
+        paddingRight: 5,
+    },
+    right: {
+      backgroundColor: 'white',
+      minWidth: '75%',
+      borderRadius: 10,
+      flexDirection: 'row',
+    },
+    date: {
+      fontFamily: 'ReadexPro-Regular',
+      color: '#979797',
+    },
+    foto: {
+      width: 40,
+      height: 40,
+      backgroundColor: 'grey',
+      borderRadius: 10,
+      marginRight: 10,
+      marginLeft: 10,
+      marginBottom: 10,
+      marginTop: 5,
     },
     desc: {
         marginRight: 30,
-        textAlign: 'center',
+        fontFamily: 'ReadexPro-Medium',
+        color: '#000000',
+    },
+    preco: {
+      fontFamily: 'ReadexPro-Medium',
+      color: '#1D2A30',
+    },
+    precoView: {
+      backgroundColor: 'white',
+      marginLeft: 'auto',
+      verticalAlign: 'middle',
+      borderRadius: 10,
     },
   });
 
