@@ -182,26 +182,7 @@ function SecondScreen() {
           <View style={styles.Bar1}></View>
           <View style={styles.Bar1}></View>
           <View style={styles.Bar1}></View> */}
-          <View style={styles.chartArea2}>
-            <View style={styles.barraBody}></View>
-            <BarGraph/>
-          </View>
-          <View style={styles.chartArea2}>
-            <View style={styles.barraBody}></View>
-            <BarGraph/>
-          </View>
-          <View style={styles.chartArea2}>
-            <View style={styles.barraBody}></View>
-            <BarGraph/>
-          </View>
-          <View style={styles.chartArea2}>
-            <View style={styles.barraBody}></View>
-            <BarGraph/>
-          </View>
-          <View style={styles.chartArea2}>
-            <View style={styles.barraBody}></View>
-            <BarGraph/>
-          </View>
+          <BarGraph/>
         </View>
         <Text style={styles.transacoes}>Transações</Text>
         <View style={styles.listArea}>
@@ -410,15 +391,12 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 20,
     flexDirection: 'row',
-    alignContent: 'center',
-    justifyContent: 'space-evenly',
-    alignItems: 'flex-end',
     backgroundColor: 'white',
     paddingLeft: 10,
     borderRadius: 20,
     paddingBottom: 25,
     paddingTop: 10,
-    paddingRight: 20,
+    paddingRight: 10,
   },
   Bar1: {
     height: barHeight,

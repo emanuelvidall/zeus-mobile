@@ -1,21 +1,49 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
 import {Text, View, StyleSheet, Animated} from 'react-native';
-
-interface rawData {
-  preco: number;
-  month: number;
-}
+import moment from 'moment';
 
 const BarGraph = () => {
 
+  const [data, setData] = useState([]);
+  const [numViews, setNumViews] = useState(0);
+  const [monthlyTotals, setMonthlyTotals] = useState({});
+
+  useEffect(() => {
+        fetch('http://192.168.0.88:3001/todoscustos')
+        .then((response) => response.json())
+        .then((json) => {
+            const sortedData = json.sort((a, b) => {
+                const dateA = moment(a.date, 'DD-MM-YYYY').toDate();
+                const dateB = moment(b.date, 'DD-MM-YYYY').toDate();
+                return dateA - dateB;
+            });
+            const newData = sortedData.reverse().slice(-6).filter((item, index, self) => self.findIndex(i => i.id === item.id) === index);
+            setData(newData);
+            setNumViews(newData.length);
+
+            const totals = {};
+            for (const item of json) {
+              const month = item.month;
+              const price = parseFloat(item.preco);
+              if (totals[month]){
+                totals[month] += price;
+              } else {
+                totals[month] = price;
+              }
+            }
+            setMonthlyTotals(totals);
+        })
+        .catch((error) => console.error('ocorreu um erro', error));
+    }, []);
+
   const [animation] = useState(new Animated.Value(0));
 
-  const size = 30;
+  const size = 100;
 
   useEffect(() => {
     Animated.timing(animation, {
-        toValue: size * 2,
+        toValue: size / 4,
         duration: 1000,
         useNativeDriver: false,
     }).start();
@@ -28,42 +56,52 @@ const BarGraph = () => {
         borderTopEndRadius: 7,
         borderTopStartRadius: 7,
         marginLeft: 10,
-        position: 'absolute',
-        top: 55.32,
-        left: 22.3,
+        maxHeight: 100,
+        alignSelf: 'center',
+        marginRight: 8,
+    },
+    container: {
+      backgroundColor: 'red',
+      flexDirection: 'column',
     },
     labels: {
-        marginRight: 10,
-        fontFamily: 'ReadexPro-Regular',
-        color: 'grey',
-        borderRadius: 10,
+      flexDirection: 'column',
+      textAlign: 'center',
+      fontSize: 10,
+      fontFamily: 'ReadexPro-Regular',
     },
-    labelscont: {
-      marginTop: 1,
-      alignItems: 'center',
-      alignSelf: 'center',
-      alignContent: 'center',
-      backgroundColor: 'white',
-      width: '100%',
-      borderRadius: 10,
-      height: 19,
+    graftot: {
+      backgroundColor: 'red',
+      flexDirection: 'row',
+      maxWidth: '100%',
     },
   });
 
-  const barStyle = {
-    height: animation,
-  };
-
-  return (
-    <>
-      <Animated.View style={[styles.barra, barStyle]}></Animated.View>
-      <View style={styles.labelscont}>
-        <Text style={styles.labels}>{size}/Abril</Text>
-      </View>
-    </>
+    return (
+    <View style={styles.graftot}>
+      {data.slice(-numViews).map((item, index) => {
+        if (index >= 6) {
+          return null;
+        }
+        const total = monthlyTotals[item.month] || 0;
+        console.log('render: ', item);
+        return <View key={item.id}
+            style={[styles.barra, { height: total }]}></View>;
+      })}
+      {Object.entries(monthlyTotals).map(([month, total]) => (
+        <>
+        <View>
+          <View key={month} style={[styles.barra, { height: total }]}>
+          </View>
+          <View>
+            <Text>{`Month: ${month}`}</Text>
+            <Text>{`Total: ${total.toFixed(2)}`}</Text>
+          </View>
+        </View>
+        </>
+      ))}
+    </View>
   );
 };
-
-
 
 export default BarGraph;
