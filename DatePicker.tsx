@@ -7,7 +7,7 @@ const PickDate = () => {
 
   return (
     <DatePicker
-      onSelectedChange={date => setSelectedDate(date)}
+      mode='date' isGregorian={true} onSelectedChange={date => setSelectedDate(date)}
     />
   );
 };
