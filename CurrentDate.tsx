@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, StyleSheet} from 'react-native';
+import {Text, StyleSheet, View} from 'react-native';
 
 
 const CurrentDate = () => {
@@ -25,7 +25,9 @@ const CurrentDate = () => {
 });
     return (
         <>
-        <Text><Text style={styles.dia}>{dia}</Text>, {'\n'}<Text style={styles.diaNumMes}>{diaNum} de {mes}</Text></Text>
+        <View style={{marginTop: 10, marginLeft: 10}}>
+            <Text><Text style={styles.dia}>{dia}</Text>, {'\n'}<Text style={styles.diaNumMes}>{diaNum} de {mes}</Text></Text>
+        </View>
         </>
     );
 };

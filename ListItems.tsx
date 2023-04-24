@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, FlatList, StyleSheet, ScrollView, Pressable, View} from 'react-native';
 import {useState, useEffect} from 'react';
 import moment from 'moment';
+import ModalComponent from './ModalComponent';
 
 interface ListItem {
   id: string;
@@ -15,6 +16,12 @@ interface ListaProps {}
 
 export const Lista: React.FC<ListaProps> = () => {
     const [data, setData] = useState<ListItem[]>([]);
+
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const toggleModal = () => {
+      setModalVisible(!modalVisible);
+    };
 
     useEffect(() => {
         fetch('http://10.50.188.76:3001/todoscustos')
@@ -36,20 +43,23 @@ export const Lista: React.FC<ListaProps> = () => {
 
   const renderItem = ({item}: {item: ListItem}) => {
     return (
-        <Pressable onPress={() => onPressItem(item)}>
-            <View style={styles.lista} >
-              <View style={styles.foto}></View>
-              <View style={styles.right}>
-                <View style={styles.descdate}>
-                  <Text style={styles.desc}>{item.desc}</Text>
-                  <Text style={styles.date}>{item.date}</Text>
-                </View>
-                <View style={styles.precoView}>
-                  <Text style={styles.preco}>R${item.preco.toFixed(2)}</Text>
+      <>
+          <Pressable  onPress={() => toggleModal()}>
+              <View style={styles.lista} >
+                <View style={styles.foto}></View>
+                <View style={styles.right}>
+                  <View style={styles.descdate}>
+                    <Text style={styles.desc}>{item.desc}</Text>
+                    <Text style={styles.date}>{item.date}</Text>
+                  </View>
+                  <View style={styles.precoView}>
+                    <Text style={styles.preco}>R${item.preco.toFixed(2)}</Text>
+                  </View>
                 </View>
               </View>
-            </View>
-        </Pressable>
+          </Pressable>
+      <ModalComponent visible={modalVisible} toggleModal={toggleModal} />
+      </>
     );
   };
 
@@ -61,7 +71,7 @@ export const Lista: React.FC<ListaProps> = () => {
         flexDirection: 'row',
         height: 60,
         marginBottom: 30,
-        width: '100%',
+        width: 300,
         borderRadius: 20,
         paddingTop: 5,
         paddingRight: 5,

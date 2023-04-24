@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flexDirection: 'row',
     display: 'flex',
-    padding: 15,
+    padding: 10,
     marginBottom: 10,
   },
   dog1Foto: {
