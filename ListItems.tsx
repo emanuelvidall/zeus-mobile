@@ -17,7 +17,7 @@ export const Lista: React.FC<ListaProps> = () => {
     const [data, setData] = useState<ListItem[]>([]);
 
     useEffect(() => {
-        fetch('http://192.168.0.88:3001/todoscustos')
+        fetch('http://10.50.188.76:3001/todoscustos')
         .then((response) => response.json())
         .then((json) => {
             const sortedData = json.sort((a, b) => {

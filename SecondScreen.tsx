@@ -5,11 +5,12 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import BarGraph from './BarGraph';
 import {Lista} from './ListItems';
 import CurrentDate from './CurrentDate';
+import TestChart from './TestChart';
 // import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-interface User {
-  _id: string;
-  name: string;
-}
+// interface User {
+//   _id: string;
+//   name: string;
+// }
 
 
 interface Cost {
@@ -19,32 +20,21 @@ interface Cost {
 }
 
 function SecondScreen() {
-  const [textInputValue, setTextInputValue] = useState('');
-  const [usuarios, setUsuarios] = useState<User[]>([]);
+  // const [textInputValue, setTextInputValue] = useState('');
+  // const [usuarios, setUsuarios] = useState<User[]>([]);
   const [totalcustos, setTotalCustos] = useState<Number>(0);
-  const [dataFetched, setDataFetched] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-
-  // const Tab = createBottomTabNavigator();
-
-  // function MyTabs() {
-  //   return (
-  //     <Tab.Navigator>
-  //       <Tab.Screen name="Home" component={FirstScreen} />
-  //       <Tab.Screen name="Settings" component={FirstScreen} />
-  //     </Tab.Navigator>
-  //   );
-  // }
+  // const [dataFetched, setDataFetched] = useState(false);
+  // const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
+    // setIsMounted(true);
     getTotalCosts();
     console.log('Component mounted');
   }, []);
 
   const getTotalCosts = async () => {
     try {
-      const response = await fetch('http://192.168.0.88:3001/todoscustos', {
+      const response = await fetch('http://10.50.188.76:3001/todoscustos', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -58,8 +48,8 @@ function SecondScreen() {
         accumulator + currentValue,0);
       setTotalCustos(total);
       console.log('Elements: ', result);
-      setUsuarios(result);
-      setDataFetched(true);
+      // setUsuarios(result);
+      // setDataFetched(true);
       console.log('total dos custos', total);
     } catch (error) {
       console.error('Error:', error);
@@ -67,127 +57,39 @@ function SecondScreen() {
     }
   };
 
-  // const sendDatatoBackend = async () => {
-  //   try {
-  //     const response = await fetch('http://10.50.63.88:3001/register', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({name: textInputValue}),
-  //     });
-  //     const result = await response.json();
-  //     console.log('Success:', result);
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //     console.log(JSON.stringify({name: textInputValue}));
-  //   }
-  // };
-
-  // const getDataFromBackend = async () => {
-  //   try {
-  //     const response = await fetch('http://10.50.63.88:3001/users', {
-  //       method: 'GET',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //     });
-  //     console.log('Success GET');
-  //     const result = await response.json();
-  //     console.log('Elements: ', result);
-  //     setUsuarios(result);
-  //     setDataFetched(true);
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //     console.log('cannot GET');
-  //   }
-  // };
-
-  // console.log('Usuarios:', usuarios);
-
-  // const renderUsuarios = () => {
-  //   if (!dataFetched) {
-  //     return null;
-  //   } else {
-  //     return (
-  //       <View>
-  //         {usuarios.map(item => {
-  //           return <Text key={item._id}>User: {item.name}</Text>;
-  //         })}
-  //       </View>
-  //     );
-  //   }
-  // };
-
-  // const renderTotalCost = () => {
-  //   if (!dataFetched) {
-  //     return null;
-  //   } else {
-  //     return (
-  //       <View>
-  //         {custos.map(item => {
-  //           return <Text key={item._id}>{totalCost}</Text>;
-  //         })}
-  //       </View>
-  //     );
-  //   }
-  // };
-
   return (
     <>
       <View style={styles.mainView}>
         <View style={styles.welcome1}>
-          <CurrentDate/>
-          {/* <View style={styles.avatarView}>
-            <Image style={styles.avatar} source={require('./avatar.jpeg')} />
-          </View> */}
+          <CurrentDate />
         </View>
         {/* <Text>{totalcustos}</Text> */}
         <View style={styles.dog1}>
           <View style={styles.dog1Texto}>
-            <Text style={styles.dog1Nome}>Nome</Text>
-            <Text style={styles.dog1Peso}>Peso</Text>
-            <Text style={styles.dog1Idade}>Idade</Text>
-            <Text style={styles.dog1Idade}>Raça</Text>
-            <Text style={styles.dog1Desc}>Descrição</Text>
+            <Text style={styles.dog1Nome}>Zeus</Text>
+            <Text style={styles.dog1Peso}>18kg</Text>
+            <Text style={styles.dog1Idade}>2 anos</Text>
           </View>
           <View style={styles.dog1Foto}>
             <Image source={require('./src/dog1.png')} style={styles.dogavatar}></Image>
           </View>
         </View>
         <View style={styles.currentCost}>
-          <Text style={styles.currentCostDesc}>Seu gasto no mês com CACHORRO1 foi:</Text>
+          <Text style={styles.currentCostDesc}>
+            Seu gasto no mês com CACHORRO1 foi :
+          </Text>
           <Text style={styles.currentCostText}>R$ {totalcustos}</Text>
         </View>
-        {/* <Text>Adicione o Gasto! 💰</Text>
-        <TextInput style={styles.input} onChangeText={setTextInputValue} /> */}
-        {/* <TouchableOpacity style={styles.button} onPress={sendDatatoBackend}>
-          <View style={{flex: 1, justifyContent: 'center'}}>
-            <Text style={{textAlign: 'center', fontSize: 20}}>POST</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={getDataFromBackend}>
-          <View style={{flex: 1, justifyContent: 'center'}}>
-            <Text style={{flex: 1, textAlign: 'center', fontSize: 20}}>GET</Text>
-          </View>
-        </TouchableOpacity> */}
-        {/* <View>{renderUsuarios()}</View> */}
         <View>
           <Text style={styles.textoGrafico}>Histórico de Gastos</Text>
         </View>
         <View style={styles.chartArea}>
-          {/* <View style={styles.Bar1}></View>
-          <View style={styles.Bar1}></View>
-          <View style={styles.Bar1}></View>
-          <View style={styles.Bar1}></View>
-          <View style={styles.Bar1}></View>
-          <View style={styles.Bar1}></View> */}
-          <BarGraph/>
+          <TestChart />
         </View>
-        <Text style={styles.transacoes}>Transações</Text>
         <View style={styles.listArea}>
+          <Text style={styles.transacoes}>Transações</Text>
           <View style={styles.listItself}>
-            <Lista/>
+            <Lista />
           </View>
         </View>
         <View style={styles.posiTO}>
@@ -218,16 +120,19 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'ReadexPro-Medium',
     fontSize: 32,
+    marginBottom: 'auto',
   },
   dog1Peso: {
     color: 'white',
     fontFamily: 'ReadexPro-Regular',
     fontSize: 12,
+    marginLeft: 105,
   },
   dog1Idade: {
     color: 'white',
     fontFamily: 'ReadexPro-Regular',
     fontSize: 12,
+    marginLeft: 105,
   },
   dog1Desc: {
     color: 'white',
@@ -237,11 +142,11 @@ const styles = StyleSheet.create({
   dog1: {
     backgroundColor: '#1D2A30',
     width: 320,
-    height: 160,
+    height: 80,
     borderRadius: 10,
     flexDirection: 'row',
     display: 'flex',
-    padding: 10,
+    padding: 15,
     marginBottom: 10,
   },
   dog1Foto: {
@@ -251,8 +156,8 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
   },
   dogavatar: {
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
     borderRadius: 10,
     marginLeft: 'auto',
   },
@@ -260,6 +165,8 @@ const styles = StyleSheet.create({
     fontFamily: 'ReadexPro-Medium',
     color: '#00160A',
     fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 5,
   },
   chartArea2: {
     position: 'relative',
@@ -293,14 +200,6 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     fontFamily: 'ReadexPro-Regular',
-  },
-  listHead: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: '100%',
-    backgroundColor: 'white',
-    justifyContent: 'space-between',
-    marginBottom: 15,
   },
   listArea: {
     backgroundColor: '#F6F6F6',
@@ -386,16 +285,14 @@ const styles = StyleSheet.create({
     fontFamily: 'ReadexPro-Regular',
   },
   chartArea: {
-    height: 150,
-    width: '90%',
+    height: 238,
+    width: 327,
     marginTop: 5,
-    marginBottom: 20,
     flexDirection: 'row',
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
     paddingLeft: 10,
     borderRadius: 20,
     paddingBottom: 25,
-    paddingTop: 10,
     paddingRight: 10,
   },
   Bar1: {

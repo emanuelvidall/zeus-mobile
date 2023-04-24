@@ -10,7 +10,7 @@ const BarGraph = () => {
   const [monthlyTotals, setMonthlyTotals] = useState({});
 
   useEffect(() => {
-        fetch('http://192.168.0.88:3001/todoscustos')
+        fetch('http://10.50.58.52:3001/todoscustos')
         .then((response) => response.json())
         .then((json) => {
             const sortedData = json.sort((a, b) => {
@@ -61,7 +61,7 @@ const BarGraph = () => {
         marginRight: 8,
     },
     container: {
-      backgroundColor: 'red',
+      backgroundColor: 'green',
       flexDirection: 'column',
     },
     labels: {
@@ -71,7 +71,7 @@ const BarGraph = () => {
       fontFamily: 'ReadexPro-Regular',
     },
     graftot: {
-      backgroundColor: 'red',
+      backgroundColor: 'green',
       flexDirection: 'row',
       maxWidth: '100%',
     },
