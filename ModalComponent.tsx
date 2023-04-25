@@ -4,13 +4,15 @@ import PickDate from './DatePicker';
 
 const ModalComponent = ({ visible, toggleModal }) => {
   return (
-    <Modal visible={visible} transparent={true} onRequestClose={toggleModal}>
+    <Modal style={{borderRadius: 10}}visible={visible} transparent={true} onRequestClose={toggleModal}>
         <View style={styles.modalView}>
-          <Text>Hello World!</Text>
+          <Text>Gasto</Text>
           <TextInput
         style={styles.input}
+        placeholder='Descricao do gasto'
       />
-      <TextInput
+      <Text>Valor</Text>
+      <TextInput placeholder='R$ valor'
         style={styles.input}
       />
       <PickDate />
@@ -29,16 +31,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalView: {
+    height: 500,
+    width: 350,
     backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
+    borderRadius: 10,
+    padding: 15,
     alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.08,
+    shadowRadius: 16.0,
+    elevation: 24,
   },
   input: {
     height: 40,
     margin: 12,
     borderWidth: 1,
     padding: 10,
+    width: 150,
   },
 });
 

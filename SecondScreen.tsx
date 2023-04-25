@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, TextInput, FlatList, Image, TouchableWithoutFeedback} from 'react-native';
+import {View, Text, StyleSheet, TextInput, FlatList, Image, TouchableWithoutFeedback, Pressable} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import BarGraph from './BarGraph';
 import {Lista} from './ListItems';
@@ -25,6 +25,11 @@ function SecondScreen() {
   const [totalcustos, setTotalCustos] = useState<Number>(0);
   // const [dataFetched, setDataFetched] = useState(false);
   // const [isMounted, setIsMounted] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
+    const toggleModal = () => {
+      setModalVisible(!modalVisible);
+    };
 
   useEffect(() => {
     // setIsMounted(true);
@@ -34,7 +39,7 @@ function SecondScreen() {
 
   const getTotalCosts = async () => {
     try {
-      const response = await fetch('http://10.50.188.76:3001/todoscustos', {
+      const response = await fetch('http://10.50.58.52:3001/todoscustos', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -93,11 +98,11 @@ function SecondScreen() {
           </View>
         </View>
         <View style={styles.posiTO}>
-          <TouchableOpacity style={styles.buttonPlus}>
+          <Pressable style={styles.buttonPlus} onPress={() => toggleModal()}>
             <View>
               <Text style={styles.buttonText}>+</Text>
             </View>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </View>
     </>

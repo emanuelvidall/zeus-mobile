@@ -41,6 +41,11 @@ var costSchema = new mongoose.Schema({
     required: [true, 'nao pode ser vazio'],
     index: true,
   },
+  tipo: {
+    type: String,
+    required: [true, 'nao pode ser vazio'],
+    index: true,
+  },
   peso: {
     type: Number,
     required: [true, 'nao pode ser vazio'],
@@ -118,6 +123,7 @@ app.post('/novocusto', (req, res) => {
   console.log('incoming request body:', req.body);
   const newCost = new Cost({
     preco: req.body.preco,
+    tipo: req.body.tipo,
     peso: req.body.peso,
     desc: req.body.desc,
     date: formattedDate,

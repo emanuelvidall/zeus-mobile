@@ -10,7 +10,7 @@ const BarGraph = () => {
   const [monthlyTotals, setMonthlyTotals] = useState({});
 
   useEffect(() => {
-        fetch('http://10.50.188.76:3001/todoscustos')
+        fetch('http://10.50.58.52:3001/todoscustos')
         .then((response) => response.json())
         .then((json) => {
             const sortedData = json.sort((a, b) => {
