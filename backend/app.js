@@ -36,7 +36,7 @@ var userSchema = new mongoose.Schema({
 });
 
 var costSchema = new mongoose.Schema({
-  preco: {
+  valor: {
     type: Number,
     required: [true, 'nao pode ser vazio'],
     index: true,
@@ -46,7 +46,7 @@ var costSchema = new mongoose.Schema({
     required: [true, 'nao pode ser vazio'],
     index: true,
   },
-  peso: {
+  quantidade: {
     type: Number,
     required: [true, 'nao pode ser vazio'],
     index: true,
@@ -114,7 +114,7 @@ app.post('/register', (req, res) => {
 });
 
 app.post('/novocusto', (req, res) => {
-  // res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Origin', '*');
   const currentDate = new Date();
   const day = currentDate.getDate().toString().padStart(2, '0');
   const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
@@ -122,9 +122,9 @@ app.post('/novocusto', (req, res) => {
   const formattedDate = `${day}-${month}-${year}`;
   console.log('incoming request body:', req.body);
   const newCost = new Cost({
-    preco: req.body.preco,
+    valor: req.body.valor,
     tipo: req.body.tipo,
-    peso: req.body.peso,
+    quantidade: req.body.quantidade,
     desc: req.body.desc,
     date: formattedDate,
     month: month,
