@@ -83,7 +83,7 @@ function SecondScreen() {
         </View>
         <View style={styles.currentCost}>
           <Text style={styles.currentCostDesc}>
-            Seu gasto no mês com CACHORRO1 foi :
+            <Text>Seu gasto total foi:</Text>
           </Text>
           <Text style={styles.currentCostText}>R$ {totalcustos.toFixed(2)}</Text>
         </View>
