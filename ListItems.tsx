@@ -24,12 +24,12 @@ export const Lista: React.FC<ListaProps> = () => {
     };
 
     useEffect(() => {
-        fetch('http://10.50.188.77:3001/todoscustos')
+        fetch('http://10.50.188.123:3001/todoscustos')
         .then((response) => response.json())
         .then((json) => {
             const sortedData = json.sort((a, b) => {
-                const dateA = moment(a.date, 'DD-MM-YYYY').toDate();
-                const dateB = moment(b.date, 'DD-MM-YYYY').toDate();
+                const dateA = moment(a.data, 'DD-MM-YYYY').toDate();
+                const dateB = moment(b.data, 'DD-MM-YYYY').toDate();
                 return dateA - dateB;
             });
             setData(sortedData.reverse());
@@ -53,7 +53,7 @@ export const Lista: React.FC<ListaProps> = () => {
                     <Text style={styles.date}>{item.date}</Text>
                   </View>
                   <View style={styles.precoView}>
-                    <Text style={styles.preco}>R${item.preco.toFixed(2)}</Text>
+                    <Text style={styles.preco}>R${item.valor.toFixed(2)}</Text>
                   </View>
                 </View>
               </View>

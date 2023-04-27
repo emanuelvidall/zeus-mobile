@@ -15,8 +15,10 @@ import TestChart from './TestChart';
 
 interface Cost {
   _id: string;
-  preco: number;
-  peso: number;
+  valor: number;
+  quantidade: number;
+  tipo: string;
+  desc: string;
 }
 
 function SecondScreen() {
@@ -32,35 +34,35 @@ function SecondScreen() {
     };
 
   useEffect(() => {
-    // setIsMounted(true);
+    const getTotalCosts = async () => {
+      try {
+        const response = await fetch('http://10.50.188.123:3001/todoscustos', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+            'Access-Control-Allow-Headers': 'Content-Type',
+          },
+        });
+        console.log('Success GET');
+        const result = await response.json();
+        const precoArray: number[] = result.map((obj: Cost) => obj.valor);
+        const total: number = precoArray.reduce(
+          (accumulator: number, currentValue: number) =>
+            accumulator + currentValue,0);
+        setTotalCustos(total);
+        console.log('Elements: ', result);
+        // setUsuarios(result);
+        // setDataFetched(true);
+        console.log('total dos custos', total);
+      } catch (error) {
+        console.error('Error:', error);
+        console.log('cannot GET');
+      }
+    };
     getTotalCosts();
-    console.log('Component mounted');
   }, []);
-
-  const getTotalCosts = async () => {
-    try {
-      const response = await fetch('http://10.50.58.52:3001/todoscustos', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      console.log('Success GET');
-      const result = await response.json();
-      const precoArray: number[] = result.map((obj: Cost) => obj.preco);
-      const total: number = precoArray.reduce(
-        (accumulator: number, currentValue: number) =>
-        accumulator + currentValue,0);
-      setTotalCustos(total);
-      console.log('Elements: ', result);
-      // setUsuarios(result);
-      // setDataFetched(true);
-      console.log('total dos custos', total);
-    } catch (error) {
-      console.error('Error:', error);
-      console.log('cannot GET');
-    }
-  };
 
   return (
     <>
@@ -83,7 +85,7 @@ function SecondScreen() {
           <Text style={styles.currentCostDesc}>
             Seu gasto no mês com CACHORRO1 foi :
           </Text>
-          <Text style={styles.currentCostText}>R$ {totalcustos}</Text>
+          <Text style={styles.currentCostText}>R$ {totalcustos.toFixed(2)}</Text>
         </View>
         <View>
           <Text style={styles.textoGrafico}>Histórico de Gastos</Text>
