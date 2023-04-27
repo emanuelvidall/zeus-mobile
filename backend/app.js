@@ -56,13 +56,8 @@ var costSchema = new mongoose.Schema({
     required: [true, 'nao pode ser vazio'],
     index: true,
   },
-  date: {
+  data: {
     type: String,
-    required: [true, 'nao pode ser vazio'],
-    index: true,
-  },
-  month: {
-    type: Number,
     required: [true, 'nao pode ser vazio'],
     index: true,
   },
@@ -115,19 +110,13 @@ app.post('/register', (req, res) => {
 
 app.post('/novocusto', (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
-  const currentDate = new Date();
-  const day = currentDate.getDate().toString().padStart(2, '0');
-  const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-  const year = currentDate.getFullYear().toString();
-  const formattedDate = `${day}-${month}-${year}`;
   console.log('incoming request body:', req.body);
   const newCost = new Cost({
     valor: req.body.valor,
     tipo: req.body.tipo,
     quantidade: req.body.quantidade,
     desc: req.body.desc,
-    date: formattedDate,
-    month: month,
+    data: req.body.data,
   });
   console.log('new cost before save: ', newCost);
 
@@ -161,5 +150,30 @@ app.get('/todoscustos', async (req2, res2) => {
   } catch (error) {
     console.error(error);
     res2.status(500).json({error: 'Internal server error'});
+  }
+});
+
+app.delete('/costs/:id', async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const cost = await Cost.findById(id);
+
+    if (!cost) {
+      return res.status(404).send({
+        message: 'Cost not found',
+      });
+    }
+
+    await Cost.deleteOne({_id: id});
+
+    return res.status(200).send({
+      message: 'Cost deleted successfully',
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({
+      message: 'Internal server error',
+    });
   }
 });
