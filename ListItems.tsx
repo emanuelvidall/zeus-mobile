@@ -1,11 +1,12 @@
 import React from 'react';
-import {Text, FlatList, StyleSheet, ScrollView, Pressable, View} from 'react-native';
+import {Text, FlatList, StyleSheet, ScrollView, Pressable, View, Alert, TouchableOpacity, Modal} from 'react-native';
 import {useState, useEffect} from 'react';
 import moment from 'moment';
-import ModalComponent from './ModalComponent';
 import { myIp } from './ModalComponent';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faStethoscope, faBowlRice, faCartShopping, faShower, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { faStethoscope, faBowlRice, faCartShopping, faShower, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import ModalComponent from './ModalComponent';
+
 
 interface ListItem {
   id: string;
@@ -19,12 +20,8 @@ interface ListaProps {}
 
 export const Lista: React.FC<ListaProps> = () => {
     const [data, setData] = useState<ListItem[]>([]);
-
     const [modalVisible, setModalVisible] = useState(false);
-
-    const toggleModal = () => {
-      setModalVisible(!modalVisible);
-    };
+    
 
     useEffect(() => {
         fetch(`http://${myIp}:3001/todoscustos`)
@@ -40,14 +37,11 @@ export const Lista: React.FC<ListaProps> = () => {
         .catch((error) => console.error('ocorreu um erro', error));
     }, []);
 
-    const onPressItem = (item: ListItem) => {
-    console.log('Pressed item:', item);
-  };
-
   const renderItem = ({item}: {item: ListItem}) => {
+    
     return (
       <>
-          <Pressable  onPress={() => toggleModal()}>
+          <TouchableOpacity  onPress={() => Alert.alert('oi')}>
               <View style={styles.lista} >
                 <View style={styles.foto}>
                   {item.tipo == 'racao' ? (
@@ -82,9 +76,9 @@ export const Lista: React.FC<ListaProps> = () => {
                   </View>
                 </View>
               </View>
-          </Pressable>
-      <ModalComponent visible={modalVisible} toggleModal={toggleModal} />
-      </>
+          </TouchableOpacity>
+          <View style={styles.separador}></View>
+    </>
     );
   };
 
@@ -95,11 +89,16 @@ export const Lista: React.FC<ListaProps> = () => {
         display: 'flex',
         flexDirection: 'row',
         height: 60,
-        marginBottom: 30,
+        marginBottom: 0,
         width: 300,
-        borderRadius: 20,
+        borderRadius: 10,
         paddingTop: 5,
         paddingRight: 5,
+    },
+    separador: {
+      backgroundColor: 'transparent',
+      height: 30,
+      width: '100%',
     },
     right: {
       backgroundColor: 'white',

@@ -153,6 +153,17 @@ app.get('/todoscustos', async (req2, res2) => {
   }
 });
 
+app.get('/todoscustos/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const result = await Cost.findById(id);
+    res.json(result);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).send('Server Error');
+  }
+});
+
 app.delete('/costs/:id', async (req, res) => {
   const id = req.params.id;
 
@@ -175,5 +186,23 @@ app.delete('/costs/:id', async (req, res) => {
     return res.status(500).send({
       message: 'Internal server error',
     });
+  }
+});
+
+app.put('/todoscustos/editar/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const data = {
+      valor: req.body.valor,
+      tipo: req.body.tipo,
+      quantidade: req.body.quantidade,
+      desc: req.body.desc,
+      data: req.body.data,
+    };
+    const result = await Cost.findByIdAndUpdate({_id: id}, data, { new: true });
+    res.json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });

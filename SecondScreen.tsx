@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     width: '80%',
     marginTop: 5,
     flexDirection: 'row',
-    backgroundColor: 'red',
+    backgroundColor: 'transparent',
     paddingLeft: 10,
     borderRadius: 20,
     paddingBottom: 25,
