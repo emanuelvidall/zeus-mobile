@@ -12,6 +12,8 @@ import TestChart from './TestChart';
 //   name: string;
 // }
 
+import { myIp } from './ModalComponent';
+
 
 interface Cost {
   _id: string;
@@ -36,7 +38,7 @@ function SecondScreen() {
   useEffect(() => {
     const getTotalCosts = async () => {
       try {
-        const response = await fetch('http://10.50.188.123:3001/todoscustos', {
+        const response = await fetch(`http://${myIp}:3001/todoscustos`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -212,7 +214,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F6F6F6',
     height: '40%',
     width: '90%',
-    paddingTop: 30,
+    paddingTop: 5,
     paddingBottom: 5,
     paddingLeft: 5,
     paddingRight: 5,
@@ -292,11 +294,11 @@ const styles = StyleSheet.create({
     fontFamily: 'ReadexPro-Regular',
   },
   chartArea: {
-    height: 238,
-    width: 327,
+    height: '25.8%',
+    width: '80%',
     marginTop: 5,
     flexDirection: 'row',
-    backgroundColor: 'transparent',
+    backgroundColor: 'red',
     paddingLeft: 10,
     borderRadius: 20,
     paddingBottom: 25,

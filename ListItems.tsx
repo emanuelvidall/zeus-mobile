@@ -3,11 +3,14 @@ import {Text, FlatList, StyleSheet, ScrollView, Pressable, View} from 'react-nat
 import {useState, useEffect} from 'react';
 import moment from 'moment';
 import ModalComponent from './ModalComponent';
+import { myIp } from './ModalComponent';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faStethoscope, faBowlRice, faCartShopping, faShower, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 
 interface ListItem {
   id: string;
   preco: number;
-  date: string;
+  data: string;
   desc: string;
 }
 
@@ -24,7 +27,7 @@ export const Lista: React.FC<ListaProps> = () => {
     };
 
     useEffect(() => {
-        fetch('http://10.50.188.123:3001/todoscustos')
+        fetch(`http://${myIp}:3001/todoscustos`)
         .then((response) => response.json())
         .then((json) => {
             const sortedData = json.sort((a, b) => {
@@ -46,11 +49,33 @@ export const Lista: React.FC<ListaProps> = () => {
       <>
           <Pressable  onPress={() => toggleModal()}>
               <View style={styles.lista} >
-                <View style={styles.foto}></View>
+                <View style={styles.foto}>
+                  {item.tipo == 'racao' ? (
+                <View style={{ backgroundColor: '#DC3434', width: 40, height: 40, borderRadius: 24,
+                  alignItems: 'center', justifyContent: 'center' }}>
+                  <FontAwesomeIcon style={{ color: 'white', fontSize: 24 }} icon={faBowlRice} />
+                </View>
+              ) : item.tipo == 'banho' ? (
+                <View style={{ backgroundColor: '#32A7E2', width: 40, height: 40, borderRadius: 24,
+                  alignItems: 'center', justifyContent: 'center' }}>
+                  <FontAwesomeIcon style={{ color: 'white', fontSize: 24 }} icon={faShower} />
+                </View>
+              ) : item.tipo == 'shop' ? (
+                <View style={{ backgroundColor: '#4BA83D', width: 40, height: 40, borderRadius: 24,
+                  alignItems: 'center', justifyContent: 'center' }}>
+                  <FontAwesomeIcon style={{ color: 'white', fontSize: 24 }} icon={faCartShopping} />
+                </View>
+              ) : item.tipo == 'clinica' ? (
+                <View style={{ backgroundColor: '#B548C6', width: 40, height: 40, borderRadius: 24,
+                  alignItems: 'center', justifyContent: 'center' }}>
+                  <FontAwesomeIcon style={{ color: 'white', fontSize: 24 }} icon={faStethoscope} />
+                </View>
+              ) : null}
+                </View>
                 <View style={styles.right}>
                   <View style={styles.descdate}>
                     <Text style={styles.desc}>{item.desc}</Text>
-                    <Text style={styles.date}>{item.date}</Text>
+                    <Text style={styles.date}>{item.data}</Text>
                   </View>
                   <View style={styles.precoView}>
                     <Text style={styles.preco}>R${item.valor.toFixed(2)}</Text>
@@ -89,7 +114,6 @@ export const Lista: React.FC<ListaProps> = () => {
     foto: {
       width: 40,
       height: 40,
-      backgroundColor: 'grey',
       borderRadius: 10,
       marginRight: 10,
       marginLeft: 10,

@@ -2,6 +2,8 @@ import React from 'react';
 import { Modal, View, Text, Pressable, StyleSheet, TextInput } from 'react-native';
 import PickDate from './DatePicker';
 
+export const myIp = '10.50.188.123';
+
 const ModalComponent = ({ visible, toggleModal }) => {
   return (
     <Modal style={{borderRadius: 10}}visible={visible} transparent={true} onRequestClose={toggleModal}>
