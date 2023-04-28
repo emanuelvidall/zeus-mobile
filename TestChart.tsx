@@ -27,7 +27,7 @@ const TestChart = () => {
         <BarChart style={{paddingRight: 10, paddingLeft: 10, borderRadius: 10}}
             data={data}
             width={300}
-            height={200}
+            height={176}
             yAxisLabel="$"
             chartConfig={{
                 fontFamilty: 'ReadexPro-Medium',

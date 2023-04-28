@@ -6,12 +6,7 @@ import BarGraph from './BarGraph';
 import {Lista} from './ListItems';
 import CurrentDate from './CurrentDate';
 import TestChart from './TestChart';
-// import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-// interface User {
-//   _id: string;
-//   name: string;
-// }
-
+import { MyModal } from './ModalComponent';
 import { myIp } from './ModalComponent';
 
 
@@ -24,16 +19,12 @@ interface Cost {
 }
 
 function SecondScreen() {
-  // const [textInputValue, setTextInputValue] = useState('');
-  // const [usuarios, setUsuarios] = useState<User[]>([]);
   const [totalcustos, setTotalCustos] = useState<Number>(0);
-  // const [dataFetched, setDataFetched] = useState(false);
-  // const [isMounted, setIsMounted] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-
-    const toggleModal = () => {
-      setModalVisible(!modalVisible);
-    };
+  
+  const toggleModal = () => {
+    setModalVisible(!modalVisible);
+  };
 
   useEffect(() => {
     const getTotalCosts = async () => {
@@ -74,7 +65,7 @@ function SecondScreen() {
         </View>
         {/* <Text>{totalcustos}</Text> */}
         <View style={styles.dog1}>
-          <View style={styles.dog1Texto}>
+          <View>
             <Text style={styles.dog1Nome}>Zeus</Text>
             <Text style={styles.dog1Peso}>18kg</Text>
             <Text style={styles.dog1Idade}>2 anos</Text>
@@ -102,11 +93,18 @@ function SecondScreen() {
           </View>
         </View>
         <View style={styles.posiTO}>
-          <Pressable style={styles.buttonPlus} onPress={() => toggleModal()}>
+          <TouchableOpacity style={styles.buttonPlus} onPress={() => toggleModal()}>
             <View>
               <Text style={styles.buttonText}>+</Text>
             </View>
-          </Pressable>
+          </TouchableOpacity>
+          {modalVisible && (
+            <MyModal
+                visible={modalVisible}
+                toggleModal={toggleModal}
+                // item={selectedItem}
+            />
+          )}
         </View>
       </View>
     </>

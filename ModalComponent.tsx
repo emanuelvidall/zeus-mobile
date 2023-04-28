@@ -1,62 +1,175 @@
-import React from 'react';
-import { Modal, View, Text, Pressable, StyleSheet, TextInput } from 'react-native';
-import PickDate from './DatePicker';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, Modal, TextInput, StyleSheet, Alert } from 'react-native';
 
-export const myIp = '10.50.188.123';
+interface ModalProps {
+  visible: boolean;
+  onClose: () => void;
+  onSave: (descricao: string, data: string, tipo: string, quantidade: number, valor: number) => void;
+  item: {};
+  toggleModal: () => void
+}
 
-const ModalComponent = ({ visible, toggleModal }) => {
-  return (
-    <Modal style={{borderRadius: 10}}visible={visible} transparent={true} onRequestClose={toggleModal}>
-        <View style={styles.modalView}>
-          <Text>Gasto</Text>
-          <TextInput
-        style={styles.input}
-        placeholder='Descricao do gasto'
-      />
-      <Text>Valor</Text>
-      <TextInput placeholder='R$ valor'
-        style={styles.input}
-      />
-      <PickDate />
-          <Pressable onPress={toggleModal}>
-            <Text>Close Modal</Text>
-          </Pressable>
-        </View>
-    </Modal>
-  );
-};
+export const myIp = '10.50.188.123'
 
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalView: {
-    height: 500,
-    width: 350,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 15,
-    alignItems: 'center',
-    alignSelf: 'center',
-    marginTop: 10,
+export const MyModal: React.FC<ModalProps> = ({ visible, item, toggleModal, onSave }) => {
+  const [desc, setDesc] = useState('');
+  const [data, setData] = useState('');
+  const [tipo, setTipo] = useState('');
+  const [valor, setValor] = useState(0);
+  const [quantidade, setQuantidade] = useState(0);
+  
+  const dados = {desc, data, tipo, valor, quantidade}
+  const url = '/novocusto';
+
+
+function postData(url, dados) {
+    
+    if (!dados.desc || !dados.data || !dados.tipo || !dados.valor || !dados.quantidade) {
+    return;
+    }
+    return fetch(`http://${myIp}:3001${url}`, {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dados)
+    })
+        .then(response => {response.json()
+        console.log('Success:', response);
+        Alert.alert('Deu certo!!!')
+        setDesc('');
+        setData('')
+        setTipo('')
+        setQuantidade(0)
+        setValor(0)
+        })
+        .catch(error => {
+        console.error(error);
+        });
+    }
+
+  const styles = StyleSheet.create({  
+    buttonPlus: {
+    backgroundColor: '#5390D9',
+    borderRadius: 100,
+    width: 60,
+    height: 60,
+    bottom: 0,
+    marginBottom: 3,
+    paddingTop: 8,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 2,
     },
-    shadowOpacity: 0.08,
-    shadowRadius: 16.0,
-    elevation: 24,
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    width: 150,
+    modalButton: {
+      backgroundColor: '#475569',
+      padding: 10,
+      borderRadius: 10,
   },
-});
+  modalButtonText: {
+    fontSize: 16,
+    color: 'white',
+    fontFamily: 'ReadexPro-Medium',
+  },
+  inputs: {
+    width: 200,
+    borderRadius: 10,
+    backgroundColor: 'white',
+    marginBottom: 10,
+    borderColor: '#e5e7eb',
+    borderWidth: 2,
+    height: 30,
+    padding: 6,
+  },
+  modalStyle: {
+    backgroundColor: '#F6F6F6',
+    alignItems: 'center',
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+  },
+  inputDesc: {
+    fontFamily: 'ReadexPro-Medium',
+    color: 'black',
+    alignSelf: 'flex-start',
+    marginLeft: 60,
+    textAlign: 'left',
+  },
+  inputContainer: {
+    backgroundColor: 'white',
+    alignItems: 'center',
+    height: '83%',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    borderRadius: 10,
+    padding: 15,
+  }
+})
 
-export default ModalComponent;
+  return (
+    <Modal visible={visible} animationType="slide">
+      <View style={styles.modalStyle}>
+        <View style={styles.inputContainer}>
+          <Text style={{ fontSize: 20, marginBottom: 20, fontFamily: 'ReadexPro-Medium', color: 'black'}}>Adicione uma nova despesa 💸 </Text>
+          <Text style={styles.inputDesc}>Descrição</Text>
+          <TextInput
+            style={styles.inputs}
+            placeholder="Descricao"
+            value={desc}
+            onChangeText={setDesc}
+          />
+          <Text style={styles.inputDesc}>Data (DD-MM-AA)</Text>
+          <TextInput
+            style={styles.inputs}
+            placeholder="Data"
+            value={data}
+            onChangeText={setData}
+          />
+          <Text style={styles.inputDesc}>Tipo</Text>
+          <TextInput
+            style={styles.inputs}
+            placeholder="Tipo"
+            value={tipo}
+            onChangeText={setTipo}
+          />
+          <Text style={styles.inputDesc}>Quantidade</Text>
+          <TextInput
+            style={styles.inputs}
+            placeholder="Quantidade"
+            keyboardType="numeric"
+            value={quantidade.toString()}
+            onChangeText={(text) => setQuantidade(parseInt(text))}
+          />
+          <Text style={styles.inputDesc}>Valor R$</Text>
+          <TextInput
+            style={styles.inputs}
+            placeholder="Valor"
+            keyboardType="numeric"
+            value={valor.toString()}
+            onChangeText={(text) => setValor(parseFloat(text))}
+          />
+          <TouchableOpacity onPress={() => {
+  if (desc) {
+    postData(url, dados)
+  } else {
+    Alert.alert('Por favor, preencha todos os campos.')
+  }
+}} style={{ backgroundColor: 'green', padding: 10, borderRadius: 10 }}>
+              <Text style={{ color: 'white', fontFamily: 'ReadexPro-Medium', fontSize: 16, }}>Adicionar</Text>
+            </TouchableOpacity>
+          <View style={{backgroundColor: 'transparent', width: '65%', marginTop: 25, }}>
+            <TouchableOpacity style={styles.modalButton} onPress={() => toggleModal()}>
+              <Text style={styles.modalButtonText}>Fechar</Text>
+            </TouchableOpacity>
+            
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+};

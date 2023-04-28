@@ -5,7 +5,7 @@ import moment from 'moment';
 import { myIp } from './ModalComponent';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faStethoscope, faBowlRice, faCartShopping, faShower, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import ModalComponent from './ModalComponent';
+import DeleteEditModal from './DeliteEditModal';
 
 
 interface ListItem {
@@ -38,10 +38,19 @@ export const Lista: React.FC<ListaProps> = () => {
     }, []);
 
   const renderItem = ({item}: {item: ListItem}) => {
+
+
+    const handleLongPress = () => {
+      setModalVisible(true);
+    };
+
+    const handleModalClose = () => {
+      setModalVisible(false);
+    };
     
     return (
       <>
-          <TouchableOpacity  onPress={() => Alert.alert('oi')}>
+          <TouchableOpacity  onPress={() => Alert.alert('oi')} onLongPress={handleLongPress}>
               <View style={styles.lista} >
                 <View style={styles.foto}>
                   {item.tipo == 'racao' ? (
@@ -78,6 +87,7 @@ export const Lista: React.FC<ListaProps> = () => {
               </View>
           </TouchableOpacity>
           <View style={styles.separador}></View>
+          
     </>
     );
   };
