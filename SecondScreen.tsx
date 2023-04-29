@@ -93,11 +93,11 @@ function SecondScreen() {
           </View>
         </View>
         <View style={styles.posiTO}>
-          <TouchableOpacity style={styles.buttonPlus} onPress={() => toggleModal()}>
-            <View>
+          <View style={{borderRadius: 100, overflow: 'hidden'}}>
+            <TouchableOpacity  style={styles.buttonPlus} onPress={() => toggleModal()}>  
               <Text style={styles.buttonText}>+</Text>
-            </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
           {modalVisible && (
             <MyModal
                 visible={modalVisible}

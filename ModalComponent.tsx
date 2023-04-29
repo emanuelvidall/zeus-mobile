@@ -9,7 +9,7 @@ interface ModalProps {
   toggleModal: () => void
 }
 
-export const myIp = '10.50.188.123'
+export const myIp = '192.168.0.16'
 
 export const MyModal: React.FC<ModalProps> = ({ visible, item, toggleModal, onSave }) => {
   const [desc, setDesc] = useState('');
