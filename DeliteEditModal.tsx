@@ -8,7 +8,7 @@ interface MyModalProps {
 
 const DeleteEditModal: React.FC<MyModalProps> = ({ visible, onClose }) => {
   return (
-    <Modal visible={visible} animationType="fade">
+    <Modal visible={visible} animationType="fade" transparent={true}>
       <View style={styles.container}>
         <TouchableOpacity style={styles.button} onPress={() => console.log('Button 1 pressed')}>
           <Text style={styles.buttonText}>Button 1</Text>
@@ -24,10 +24,15 @@ const DeleteEditModal: React.FC<MyModalProps> = ({ visible, onClose }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'black',
+    height: 250,
+    width: '50%',
+    borderRadius:10,
+    marginBottom: 'auto',
+    marginTop: 'auto',
   },
   button: {
     width: 150,

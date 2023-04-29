@@ -20,27 +20,11 @@ interface ListaProps {}
 
 export const Lista: React.FC<ListaProps> = () => {
     const [data, setData] = useState<ListItem[]>([]);
-    const [modalVisible, setModalVisible] = useState(false);
-    const [slidePosition, setSlidePosition] = useState(0);
+    const [editModal, setEditModal] = useState(false);
 
-    const panResponder = useRef(
-      PanResponder.create({
-        onMoveShouldSetPanResponderCapture: (evt, gestureState) =>
-          Math.abs(gestureState.dx) > 5,
-        onPanResponderMove: (evt, gestureState) => {
-          console.log('mexeu')
-          Alert.alert('mesolta')
-          setSlidePosition(gestureState.dx);  
-        },
-        onPanResponderRelease: (evt, gestureState) => {
-          console.log('soltou')
-          Alert.alert('ufasoltou')
-          setSlidePosition(0);
-        },
-      })
-    ).current;
-    
-    
+    const toggleModal = () => {
+      setEditModal(!editModal);
+    };
 
     useEffect(() => {
         fetch(`http://${myIp}:3001/todoscustos`)
@@ -57,21 +41,11 @@ export const Lista: React.FC<ListaProps> = () => {
     }, []);
 
     const renderItem = ({ item }: { item: ListItem }) => {
-      const handleLongPress = () => {
-        setModalVisible(true);
-      };
-    
-      const handleModalClose = () => {
-        setModalVisible(false);
-      };
     
       return (
         <View>
             <View key={item._id}>
-              <TouchableOpacity
-                onPress={() => Alert.alert('oi')}
-                {...panResponder.panHandlers}
-              >
+              <TouchableOpacity onPress={() => toggleModal()}>
                 <View style={styles.lista}>
                   <View style={styles.foto}>
                     {item.tipo == 'racao' ? (
@@ -151,22 +125,18 @@ export const Lista: React.FC<ListaProps> = () => {
                       </Text>
                     </View>
                   </View>
-                  {slidePosition < 0 && (
-                    <TouchableOpacity
-                      style={{ backgroundColor: 'green', width: 30, height: 30 }}
-                      onPress={handleDelete}
-                    >
-                      <FontAwesomeIcon
-                        icon={faTrashCan}
-                        style={styles.deleteIcon}
-                      />
-                    </TouchableOpacity>
-                  )}
                 </View>
               </TouchableOpacity>
               <View style={styles.separador}></View>
+              {editModal && (
+                  <DeleteEditModal
+                      visible={editModal}
+                      toggleModal={toggleModal}
+                  />
+              )}
             </View>
         </View>
+        
       );
     };
     
