@@ -21,16 +21,24 @@ interface ListaProps {}
 export const Lista: React.FC<ListaProps> = () => {
     const [data, setData] = useState<ListItem[]>([]);
     const [editModal, setEditModal] = useState(false);
+    const [selectedValor, setSelectedValor] = useState<number>(0);
+    const [selectedDesc, setSelectedDesc] = useState<string>('');
+    const [selectedData, setSelectedData] = useState<string>('');
+    const [selectedTipo, setSelectedTipo] = useState<string>('');
 
-    const toggleModal = () => {
+    const toggleModal = (valor: number, data: string, desc: string, tipo: string) => {
       setEditModal(!editModal);
+      setSelectedValor(valor);
+      setSelectedData(data);
+      setSelectedDesc(desc)
+      setSelectedTipo(tipo)
     };
 
     useEffect(() => {
         fetch(`http://${myIp}:3001/todoscustos`)
         .then((response) => response.json())
         .then((json) => {
-            const sortedData = json.sort((a, b) => {
+            const sortedData = json.sort((a: Date, b: Date) => {
                 const dateA = moment(a.data, 'DD-MM-YYYY').toDate();
                 const dateB = moment(b.data, 'DD-MM-YYYY').toDate();
                 return dateA - dateB;
@@ -45,7 +53,7 @@ export const Lista: React.FC<ListaProps> = () => {
       return (
         <View>
             <View key={item._id}>
-              <TouchableOpacity onPress={() => toggleModal()}>
+              <TouchableOpacity onPress={() => toggleModal(item.valor, item.data, item.desc, item.tipo)}>
                 <View style={styles.lista}>
                   <View style={styles.foto}>
                     {item.tipo == 'racao' ? (
@@ -132,6 +140,10 @@ export const Lista: React.FC<ListaProps> = () => {
                   <DeleteEditModal
                       visible={editModal}
                       toggleModal={toggleModal}
+                      valor={selectedValor}
+                      data={selectedData}
+                      tipo={selectedTipo}
+                      desc={selectedDesc}
                   />
               )}
             </View>
