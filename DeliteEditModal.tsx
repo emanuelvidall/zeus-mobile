@@ -15,21 +15,24 @@ interface MyModalProps {
 const DeleteEditModal: React.FC<MyModalProps> = ({ visible, toggleModal, valor, data, tipo, desc }) => {
   return (
     <Modal visible={visible} animationType="fade" transparent={true}>
-      <View style={styles.container}>
-      <TouchableOpacity style={[styles.buttonClose]} onPress={() => toggleModal()}>
-        <FontAwesomeIcon icon={faX} style={styles.iconClose}/>
-        </TouchableOpacity>
-        <Text style={{color: 'white'}}>Desc: {desc}</Text>
-        <Text style={{color: 'white'}}>valor: {valor}</Text>
-        <Text style={{color: 'white'}}>Data: {data}</Text>
-        <Text style={{color: 'white'}}>Tipo: {tipo}</Text>
-        <View style={styles.opcoes}>
-          <TouchableOpacity style={[styles.button, styles.editar]} onPress={() => Alert.alert('Button 1 pressed')}>
-            <FontAwesomeIcon icon={faPenToSquare} style={styles.buttonText}/>
+      <View style={{flex: 1, width: '100%', height:'100%'}}>
+        <View style={{backgroundColor:'#1D2A30', flex: 1, height: '100%', width: '100%', opacity: 0.22, position: 'absolute', zIndex: 0,}}></View>
+        <View style={styles.container}>
+        <TouchableOpacity style={[styles.buttonClose]} onPress={() => toggleModal()}>
+          <FontAwesomeIcon icon={faX} style={styles.iconClose}/>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.excluir]} onPress={() => Alert.alert('Button 2 pressed')}>
-          <FontAwesomeIcon icon={faTrashCan} style={styles.buttonText}/>
-          </TouchableOpacity>
+          <Text style={{color: 'white'}}>Desc: {desc}</Text>
+          <Text style={{color: 'white'}}>valor: {valor}</Text>
+          <Text style={{color: 'white'}}>Data: {data}</Text>
+          <Text style={{color: 'white'}}>Tipo: {tipo}</Text>
+          <View style={styles.opcoes}>
+            <TouchableOpacity style={[styles.button, styles.editar]} onPress={() => Alert.alert('Button 1 pressed')}>
+              <FontAwesomeIcon icon={faPenToSquare} style={styles.buttonText}/>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.button, styles.excluir]} onPress={() => Alert.alert('Button 2 pressed')}>
+            <FontAwesomeIcon icon={faTrashCan} style={styles.buttonText}/>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Modal>
@@ -39,7 +42,7 @@ const DeleteEditModal: React.FC<MyModalProps> = ({ visible, toggleModal, valor, 
 const styles = StyleSheet.create({
   container: {
     alignSelf: 'center',
-    backgroundColor: 'black',
+    backgroundColor: 'rgba(0,0,0,0.5)',
     height: 250,
     width: '50%',
     borderRadius:10,
@@ -48,6 +51,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 1,
   },
   opcoes: {
     flexDirection: 'row',
@@ -61,15 +65,20 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'absolute',
+    top: -10,
+    right: -10,
   },
   iconClose: {
     color: 'white',
   },
   excluir: {
     backgroundColor: 'red',
+    marginLeft: 10,
   },
   editar: {
     backgroundColor: 'orange',
+    marginRight: 10,
   },
   button: {
     width: 50,
