@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Modal, TouchableOpacity, View, Text, StyleSheet, Alert } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPenToSquare, faTrashCan, faX, faStethoscope, faShower, faBowlRice, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { myIp } from './ModalComponent';
+import { TextInput } from 'react-native-gesture-handler';
 
 interface MyModalProps {
   visible: boolean;
@@ -12,11 +13,18 @@ interface MyModalProps {
   data: string;
   tipo: string;
   _id: string;
+  quantidade: number;
   reloadData: () => void
   reloadTotal: () => void
 }
 
-const DeleteEditModal: React.FC<MyModalProps> = ({ visible, toggleModal, valor, data, tipo, desc, _id, reloadData, reloadTotal }) => {
+const DeleteEditModal: React.FC<MyModalProps> = ({ visible, toggleModal, valor, data, tipo, desc, _id, reloadData, reloadTotal, quantidade }) => {
+
+  const [newDesc, setNewDesc] = useState<string>('');
+  const [newValor, setNewValor] = useState<number>(0);
+  const [newTipo, setNewTipo] = useState<string>('');
+  const [newQuant, setNewQuant] = useState<number>(0);
+  const [newData, setNewData] = useState<string>('');
 
   const handleDelete = () => {
     fetch(`http://${myIp}:3001/costs/${_id}`, {
@@ -37,6 +45,39 @@ const DeleteEditModal: React.FC<MyModalProps> = ({ visible, toggleModal, valor, 
     });
 }
 
+function handleSave() {
+
+  const updatedDados = {
+    desc: newDesc === '' ? desc : newDesc,
+    valor: newValor === 0 ? valor : newValor,
+    tipo: newTipo === '' ? tipo : newTipo,
+    quantidade: newQuant === 0 ? quantidade : newQuant,
+    data: newData === '' ? data : newData,
+  };
+
+  return fetch(`http://${myIp}:3001/todoscustos/editar/${_id}`, {
+      method: 'PUT',
+      headers: {
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedDados)
+  })
+      .then(response => {response.json()
+      Alert.alert('Despesa editada!')
+      setNewDesc('');
+      setNewValor(0)
+      setNewTipo('')
+      setNewQuant(0)
+      setNewData('')
+      toggleModal()
+      reloadTotal()
+      reloadData()
+      })
+      .catch(error => {
+      console.error(error);
+      });
+  }
+
 
   return (
     <Modal visible={visible} animationType="fade" transparent={true}>
@@ -47,81 +88,24 @@ const DeleteEditModal: React.FC<MyModalProps> = ({ visible, toggleModal, valor, 
           <FontAwesomeIcon icon={faX} style={styles.iconClose}/>
           </TouchableOpacity>
           <View style={{flexDirection: 'column'}}>
-          <View>
-            {tipo == 'racao' ? (
-                      <View
-                        style={{
-                          backgroundColor: '#DC3434',
-                          width: 40,
-                          height: 40,
-                          borderRadius: 24,
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}
-                      >
-                        <FontAwesomeIcon
-                          style={{ color: 'white', fontSize: 24 }}
-                          icon={faBowlRice}
-                        />
-                      </View>
-                    ) : tipo == 'banho' ? (
-                      <View
-                        style={{
-                          backgroundColor: '#32A7E2',
-                          width: 40,
-                          height: 40,
-                          borderRadius: 24,
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}
-                      >
-                        <FontAwesomeIcon
-                          style={{ color: 'white', fontSize: 24 }}
-                          icon={faShower}
-                        />
-                      </View>
-                    ) : tipo == 'shop' ? (
-                      <View
-                        style={{
-                          backgroundColor: '#4BA83D',
-                          width: 40,
-                          height: 40,
-                          borderRadius: 24,
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}
-                      >
-                        <FontAwesomeIcon
-                          style={{ color: 'white', fontSize: 24 }}
-                          icon={faCartShopping}
-                        />
-                      </View>
-                    ) : tipo == 'clinica' ? (
-                      <View
-                        style={{
-                          backgroundColor: '#B548C6',
-                          width: 40,
-                          height: 40,
-                          borderRadius: 24,
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}
-                      >
-                        <FontAwesomeIcon
-                          style={{ color: 'white', fontSize: 24 }}
-                          icon={faStethoscope}
-                        />
-                      </View>
-                    ) : null}
-          </View>
-            <Text style={{color: 'black', fontFamily: 'ReadexPro-Medium'}}>Descrição: {desc}</Text>
-            <Text style={{color: 'black', fontFamily: 'ReadexPro-Medium'}}>Valor: R$ {valor}</Text>
-            <Text style={{color: 'black', fontFamily: 'ReadexPro-Medium'}}>Tipo: {tipo}</Text>
-            <Text style={{color: 'black', opacity: 0.5}}>Data: {data}</Text>
-            <Text style={{color: 'black', fontFamily: 'ReadexPro-Medium'}}>{_id}</Text>
+          <Text style={{color: 'black', fontFamily: 'ReadexPro-Medium'}}>Descricao</Text>
+            <TextInput style={styles.editInputs} placeholder={desc}
+            onChangeText={setNewDesc}/>
+            <Text style={{color: 'black', fontFamily: 'ReadexPro-Medium'}}>Valor</Text>
+            <TextInput style={styles.editInputs} placeholder={valor.toString()}
+            onChangeText={(text) => setNewValor(parseInt(text))}/>
+            <Text style={{color: 'black', fontFamily: 'ReadexPro-Medium'}}>Tipo</Text>
+            <TextInput style={styles.editInputs} placeholder={tipo}
+            onChangeText={setNewTipo}/>
+            <Text style={{color: 'black', fontFamily: 'ReadexPro-Medium'}}>Quantidade</Text>
+            <TextInput style={styles.editInputs} placeholder={quantidade.toString()}
+            onChangeText={(text) => setNewQuant(parseInt(text))}/>
+            <Text style={{color: 'black', fontFamily: 'ReadexPro-Medium'}}>Data</Text>
+            <TextInput style={styles.editInputs} placeholder={data}
+            onChangeText={setNewData}/>
           </View>
           <View style={styles.opcoes}>
-            <TouchableOpacity style={[styles.button, styles.editar]} onPress={() => Alert.alert('Button 1 pressed')}>
+            <TouchableOpacity style={[styles.button, styles.editar]} onPress={handleSave}>
               <FontAwesomeIcon icon={faPenToSquare} style={styles.buttonText}/>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.button, styles.excluir]} onPress={handleDelete}>
@@ -139,7 +123,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: 'white',
     paddingTop: 30,
-    height: 250,
+    height: 400,
     width: '66%',
     borderRadius:10,
     marginBottom: 'auto',
@@ -149,6 +133,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 1,
+  },
+  editInputs: {
+    width: 200,
+    borderRadius: 10,
+    backgroundColor: 'white',
+    marginBottom: 10,
+    borderColor: '#e5e7eb',
+    borderWidth: 2,
+    height: 30,
+    padding: 6,
   },
   opcoes: {
     flexDirection: 'row',

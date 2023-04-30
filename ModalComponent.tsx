@@ -45,7 +45,6 @@ function postData(url, dados) {
         setValor(0)
         toggleModal()
         reloadTotal()
-        setReload(true)
         })
         .catch(error => {
         console.error(error);

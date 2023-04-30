@@ -14,6 +14,7 @@ interface ListItem {
   desc: string;
   valor: number;
   tipo: string;
+  quantidade: number
 }
 
 
@@ -31,14 +32,16 @@ export const Lista: React.FC<ListaProps> = ({ reloadTotal, reload, setReload }) 
     const [selectedData, setSelectedData] = useState<string>('');
     const [selectedTipo, setSelectedTipo] = useState<string>('');
     const [selectedItem, setSelectedItem] = useState<string>('');
+    const [selectedQuant, setSelectedQuant] = useState<number>(0);
 
-    const toggleModal = (valor: number, data: string, desc: string, tipo: string, _id: string) => {
+    const toggleModal = (valor: number, data: string, desc: string, tipo: string, _id: string, quantidade: number) => {
       setEditModal(!editModal);
       setSelectedValor(valor);
       setSelectedData(data);
-      setSelectedDesc(desc)
-      setSelectedTipo(tipo)
-      setSelectedItem(_id)
+      setSelectedDesc(desc);
+      setSelectedTipo(tipo);
+      setSelectedItem(_id);
+      setSelectedQuant(quantidade);
     };
 
     const fetchData = () => {
@@ -66,7 +69,7 @@ export const Lista: React.FC<ListaProps> = ({ reloadTotal, reload, setReload }) 
       return (
         <View>
             <View key={item._id}>
-              <TouchableOpacity onPress={() => toggleModal(item.valor, item.data, item.desc, item.tipo, item._id)}>
+              <TouchableOpacity onPress={() => toggleModal(item.valor, item.data, item.desc, item.tipo, item._id, item.quantidade)}>
                 <View style={styles.lista}>
                   <View style={styles.foto}>
                     {item.tipo == 'racao' ? (
@@ -160,6 +163,7 @@ export const Lista: React.FC<ListaProps> = ({ reloadTotal, reload, setReload }) 
                       _id={selectedItem}
                       reloadData={fetchData}
                       reloadTotal={reloadTotal}
+                      quantidade={selectedQuant}
                   />
               )}
             </View>
