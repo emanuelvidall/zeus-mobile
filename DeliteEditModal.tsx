@@ -13,9 +13,10 @@ interface MyModalProps {
   tipo: string;
   _id: string;
   reloadData: () => void
+  reloadTotal: () => void
 }
 
-const DeleteEditModal: React.FC<MyModalProps> = ({ visible, toggleModal, valor, data, tipo, desc, _id, reloadData }) => {
+const DeleteEditModal: React.FC<MyModalProps> = ({ visible, toggleModal, valor, data, tipo, desc, _id, reloadData, reloadTotal }) => {
 
   const handleDelete = () => {
     fetch(`http://${myIp}:3001/costs/${_id}`, {
@@ -28,6 +29,7 @@ const DeleteEditModal: React.FC<MyModalProps> = ({ visible, toggleModal, valor, 
         Alert.alert('item deletado!', _id)
         toggleModal()
         reloadData()
+        reloadTotal()
     })
     .catch((error) => {
         // handle error

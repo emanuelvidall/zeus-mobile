@@ -21,40 +21,42 @@ interface Cost {
 function SecondScreen() {
   const [totalcustos, setTotalCustos] = useState<Number>(0);
   const [modalVisible, setModalVisible] = useState(false);
+  const [reload, setReload] = useState(false);
+
   
   const toggleModal = () => {
     setModalVisible(!modalVisible);
   };
 
+  const getTotalCosts = async () => {
+    try {
+      const response = await fetch(`http://${myIp}:3001/todoscustos`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+          'Access-Control-Allow-Headers': 'Content-Type',
+        },
+      });
+      console.log('Success GET');
+      const result = await response.json();
+      const precoArray: number[] = result.map((obj: Cost) => obj.valor);
+      const total: number = precoArray.reduce(
+        (accumulator: number, currentValue: number) =>
+          accumulator + currentValue,0);
+      setTotalCustos(total);
+      console.log('Elements: ', result);
+      // setUsuarios(result);
+      // setDataFetched(true);
+      console.log('total dos custos', total);
+    } catch (error) {
+      console.error('Error:', error);
+      console.log('cannot GET');
+    }
+  };
   useEffect(() => {
-    const getTotalCosts = async () => {
-      try {
-        const response = await fetch(`http://${myIp}:3001/todoscustos`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-            'Access-Control-Allow-Headers': 'Content-Type',
-          },
-        });
-        console.log('Success GET');
-        const result = await response.json();
-        const precoArray: number[] = result.map((obj: Cost) => obj.valor);
-        const total: number = precoArray.reduce(
-          (accumulator: number, currentValue: number) =>
-            accumulator + currentValue,0);
-        setTotalCustos(total);
-        console.log('Elements: ', result);
-        // setUsuarios(result);
-        // setDataFetched(true);
-        console.log('total dos custos', total);
-      } catch (error) {
-        console.error('Error:', error);
-        console.log('cannot GET');
-      }
-    };
-    getTotalCosts();
+  getTotalCosts();
   }, []);
 
   return (
@@ -89,7 +91,7 @@ function SecondScreen() {
         <View style={styles.listArea}>
           <Text style={styles.transacoes}>Transações</Text>
           <View style={styles.listItself}>
-            <Lista />
+            <Lista reloadTotal={getTotalCosts} reload={reload} setReload={setReload}/>
           </View>
         </View>
         <View style={styles.posiTO}>
@@ -102,7 +104,9 @@ function SecondScreen() {
             <MyModal
                 visible={modalVisible}
                 toggleModal={toggleModal}
-                // item={selectedItem}
+                reloadTotal={getTotalCosts}
+                reload={reload}
+                setReload={setReload}
             />
           )}
         </View>

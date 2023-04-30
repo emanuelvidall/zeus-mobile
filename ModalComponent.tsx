@@ -3,15 +3,17 @@ import { View, Text, TouchableOpacity, Modal, TextInput, StyleSheet, Alert } fro
 
 interface ModalProps {
   visible: boolean;
-  onClose: () => void;
   onSave: (descricao: string, data: string, tipo: string, quantidade: number, valor: number) => void;
   item: {};
-  toggleModal: () => void
+  toggleModal: () => void;
+  reloadTotal: () => void;
+  reload: boolean;
+  setReload: (reload: boolean) => void;
 }
 
 export const myIp = '192.168.0.16'
 
-export const MyModal: React.FC<ModalProps> = ({ visible, item, toggleModal, onSave }) => {
+export const MyModal: React.FC<ModalProps> = ({ visible, item, toggleModal, reloadTotal, reload, setReload }) => {
   const [desc, setDesc] = useState('');
   const [data, setData] = useState('');
   const [tipo, setTipo] = useState('');
@@ -35,13 +37,15 @@ function postData(url, dados) {
         body: JSON.stringify(dados)
     })
         .then(response => {response.json()
-        console.log('Success:', response);
-        Alert.alert('Deu certo!!!')
+        Alert.alert('Despesa adicionada!')
         setDesc('');
         setData('')
         setTipo('')
         setQuantidade(0)
         setValor(0)
+        toggleModal()
+        reloadTotal()
+        setReload(true)
         })
         .catch(error => {
         console.error(error);

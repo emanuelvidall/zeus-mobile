@@ -17,9 +17,13 @@ interface ListItem {
 }
 
 
-interface ListaProps {}
+interface ListaProps {
+  reloadTotal: () => void
+  reload: boolean;
+  setReload: (reload: boolean) => void;
+}
 
-export const Lista: React.FC<ListaProps> = () => {
+export const Lista: React.FC<ListaProps> = ({ reloadTotal, reload, setReload }) => {
     const [data, setData] = useState<ListItem[]>([]);
     const [editModal, setEditModal] = useState(false);
     const [selectedValor, setSelectedValor] = useState<number>(0);
@@ -53,11 +57,12 @@ export const Lista: React.FC<ListaProps> = () => {
     
     useEffect(() => {
       fetchData();
-    }, []);
+      setReload(false)
+    }, [reload]);
     
 
     const renderItem = ({ item }: { item: ListItem }) => {
-    
+
       return (
         <View>
             <View key={item._id}>
@@ -154,6 +159,7 @@ export const Lista: React.FC<ListaProps> = () => {
                       desc={selectedDesc}
                       _id={selectedItem}
                       reloadData={fetchData}
+                      reloadTotal={reloadTotal}
                   />
               )}
             </View>
