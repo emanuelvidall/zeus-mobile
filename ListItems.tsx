@@ -9,10 +9,11 @@ import DeleteEditModal from './DeliteEditModal';
 
 
 interface ListItem {
-  id: string;
-  preco: number;
+  _id: string;
   data: string;
   desc: string;
+  valor: number;
+  tipo: string;
 }
 
 
@@ -25,35 +26,42 @@ export const Lista: React.FC<ListaProps> = () => {
     const [selectedDesc, setSelectedDesc] = useState<string>('');
     const [selectedData, setSelectedData] = useState<string>('');
     const [selectedTipo, setSelectedTipo] = useState<string>('');
+    const [selectedItem, setSelectedItem] = useState<string>('');
 
-    const toggleModal = (valor: number, data: string, desc: string, tipo: string) => {
+    const toggleModal = (valor: number, data: string, desc: string, tipo: string, _id: string) => {
       setEditModal(!editModal);
       setSelectedValor(valor);
       setSelectedData(data);
       setSelectedDesc(desc)
       setSelectedTipo(tipo)
+      setSelectedItem(_id)
     };
 
-    useEffect(() => {
-        fetch(`http://${myIp}:3001/todoscustos`)
+    const fetchData = () => {
+      fetch(`http://${myIp}:3001/todoscustos`)
         .then((response) => response.json())
         .then((json) => {
-            const sortedData = json.sort((a: Date, b: Date) => {
-                const dateA = moment(a.data, 'DD-MM-YYYY').toDate();
-                const dateB = moment(b.data, 'DD-MM-YYYY').toDate();
-                return dateA - dateB;
-            });
-            setData(sortedData.slice(-10).reverse());
+          const sortedData = json.sort((a: Date, b: Date) => {
+            const dateA = moment(a.data, 'DD-MM-YYYY').toDate();
+            const dateB = moment(b.data, 'DD-MM-YYYY').toDate();
+            return dateA - dateB;
+          });
+          setData(sortedData.slice(-10).reverse());
         })
         .catch((error) => console.error('ocorreu um erro', error));
+    };
+    
+    useEffect(() => {
+      fetchData();
     }, []);
+    
 
     const renderItem = ({ item }: { item: ListItem }) => {
     
       return (
         <View>
             <View key={item._id}>
-              <TouchableOpacity onPress={() => toggleModal(item.valor, item.data, item.desc, item.tipo)}>
+              <TouchableOpacity onPress={() => toggleModal(item.valor, item.data, item.desc, item.tipo, item._id)}>
                 <View style={styles.lista}>
                   <View style={styles.foto}>
                     {item.tipo == 'racao' ? (
@@ -144,6 +152,8 @@ export const Lista: React.FC<ListaProps> = () => {
                       data={selectedData}
                       tipo={selectedTipo}
                       desc={selectedDesc}
+                      _id={selectedItem}
+                      reloadData={fetchData}
                   />
               )}
             </View>
