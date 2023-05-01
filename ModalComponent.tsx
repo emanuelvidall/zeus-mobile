@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, TextInput, StyleSheet, Alert } from 'react-native';
+import PegaData from './PegaData';
+import PickerTipo from './PickerTipo';
 
 interface ModalProps {
   visible: boolean;
@@ -19,7 +21,19 @@ export const MyModal: React.FC<ModalProps> = ({ visible, item, toggleModal, relo
   const [tipo, setTipo] = useState('');
   const [valor, setValor] = useState(0);
   const [quantidade, setQuantidade] = useState(0);
+  const [selectedValue, setSelectedValue] = useState('racao');
+
   
+  const handleDataChange = (date) => {
+    const formattedDate = date.toLocaleString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+    })
+    console.log('data aqui!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', formattedDate)
+    setData(formattedDate.replace(/\//g, '-'))
+}
+
   const dados = {desc, data, tipo, valor, quantidade}
   const url = '/novocusto';
 
@@ -127,19 +141,11 @@ function postData(url, dados) {
             onChangeText={setDesc}
           />
           <Text style={styles.inputDesc}>Data (DD-MM-AA)</Text>
-          <TextInput
-            style={styles.inputs}
-            placeholder="Data"
-            value={data}
-            onChangeText={setData}
-          />
+          <PegaData onChange={handleDataChange}/>
           <Text style={styles.inputDesc}>Tipo</Text>
-          <TextInput
-            style={styles.inputs}
-            placeholder="Tipo"
-            value={tipo}
-            onChangeText={setTipo}
-          />
+          <View style={{width: 200, height: 50}}>
+            <PickerTipo onChange={setTipo}/>
+          </View>
           <Text style={styles.inputDesc}>Quantidade</Text>
           <TextInput
             style={styles.inputs}
