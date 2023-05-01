@@ -11,18 +11,17 @@ interface ModalProps {
   reloadTotal: () => void;
   reload: boolean;
   setReload: (reload: boolean) => void;
+  reloadData: () => void
 }
 
 export const myIp = '192.168.0.16'
 
-export const MyModal: React.FC<ModalProps> = ({ visible, item, toggleModal, reloadTotal, reload, setReload }) => {
+export const MyModal: React.FC<ModalProps> = ({ visible, item, toggleModal, reloadTotal, reload, setReload, reloadData }) => {
   const [desc, setDesc] = useState('');
   const [data, setData] = useState('');
   const [tipo, setTipo] = useState('');
   const [valor, setValor] = useState(0);
   const [quantidade, setQuantidade] = useState(0);
-  const [selectedValue, setSelectedValue] = useState('racao');
-
   
   const handleDataChange = (date) => {
     const formattedDate = date.toLocaleString('en-GB', {
@@ -59,6 +58,7 @@ function postData(url, dados) {
         setValor(0)
         toggleModal()
         reloadTotal()
+        reloadData()
         })
         .catch(error => {
         console.error(error);

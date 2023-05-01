@@ -107,6 +107,7 @@ function SecondScreen() {
                 reloadTotal={getTotalCosts}
                 reload={reload}
                 setReload={setReload}
+                reloadData={getTotalCosts}
             />
           )}
         </View>
