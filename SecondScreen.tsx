@@ -8,6 +8,7 @@ import CurrentDate from './CurrentDate';
 import TestChart from './TestChart';
 import { MyModal } from './ModalComponent';
 import { myIp } from './ModalComponent';
+import ChartVic from './ChartVic';
 
 
 interface Cost {
@@ -86,7 +87,8 @@ function SecondScreen() {
           <Text style={styles.textoGrafico}>Histórico de Gastos</Text>
         </View>
         <View style={styles.chartArea}>
-          <TestChart />
+          {/* <TestChart /> */}
+          <ChartVic />
         </View>
         <View style={styles.listArea}>
           <Text style={styles.transacoes}>Transações</Text>
