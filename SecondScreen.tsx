@@ -66,7 +66,6 @@ function SecondScreen() {
         <View style={styles.welcome1}>
           <CurrentDate />
         </View>
-        {/* <Text>{totalcustos}</Text> */}
         <View style={styles.dog1}>
           <View>
             <Text style={styles.dog1Nome}>Zeus</Text>
@@ -155,18 +154,19 @@ const styles = StyleSheet.create({
   },
   dog1: {
     backgroundColor: '#1D2A30',
-    width: 320,
+    width: 250,
     height: 80,
     borderRadius: 10,
     flexDirection: 'row',
     display: 'flex',
     padding: 10,
     marginBottom: 10,
+    zIndex: 10,
   },
   dog1Foto: {
     backgroundColor: '#28343c',
     borderRadius: 10,
-    width: '50%',
+    width: '30%',
     marginLeft: 'auto',
   },
   dogavatar: {

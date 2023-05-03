@@ -14,7 +14,7 @@ interface ModalProps {
   reloadData: () => void
 }
 
-export const myIp = '10.50.188.123'
+export const myIp = '10.50.188.147'
 
 export const MyModal: React.FC<ModalProps> = ({ visible, item, toggleModal, reloadTotal, reload, setReload, reloadData }) => {
   const [desc, setDesc] = useState('');
