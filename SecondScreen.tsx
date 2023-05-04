@@ -1,11 +1,8 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, TextInput, FlatList, Image, TouchableWithoutFeedback, Pressable} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import BarGraph from './BarGraph';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {Lista} from './ListItems';
 import CurrentDate from './CurrentDate';
-import TestChart from './TestChart';
 import { MyModal } from './ModalComponent';
 import { myIp } from './ModalComponent';
 import ChartVic from './ChartVic';
@@ -249,8 +246,10 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   posiTO: {
-    marginTop: 'auto',
     borderRadius: 100,
+    position: 'absolute',
+    zIndex: 100,
+    bottom: 0,
   },
   buttonText: {
     fontSize: 30,
@@ -341,6 +340,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: '#F6F6F6',
     height: '100%',
+    flex: 1,
+    position: 'relative',
   },
 });
 

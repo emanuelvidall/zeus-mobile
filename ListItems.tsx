@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import {Text, FlatList, StyleSheet, ScrollView, Pressable, View, Alert, TouchableOpacity, Modal, PanResponder} from 'react-native';
+import {Text, FlatList, StyleSheet, ScrollView, Pressable, View, Alert, TouchableOpacity, Modal, PanResponder, RefreshControl} from 'react-native';
 import {useState, useEffect} from 'react';
 import moment from 'moment';
 import { myIp } from './ModalComponent';
@@ -53,7 +53,8 @@ export const Lista: React.FC<ListaProps> = ({ reloadTotal, reload, setReload }) 
             const dateB = moment(b.data, 'DD-MM-YYYY').toDate();
             return dateA - dateB;
           });
-          setData(sortedData.slice(-10).reverse());
+          // setData(sortedData.slice(-10).reverse());
+          setData(sortedData.reverse())
         })
         .catch((error) => console.error('ocorreu um erro', error));
     };
@@ -64,10 +65,22 @@ export const Lista: React.FC<ListaProps> = ({ reloadTotal, reload, setReload }) 
     }, [reload]);
     
 
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
     const renderItem = ({ item }: { item: ListItem }) => {
 
       return (
-        <View>
+        <ScrollView refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
             <View key={item._id}>
               <TouchableOpacity onPress={() => toggleModal(item.valor, item.data, item.desc, item.tipo, item._id, item.quantidade)}>
                 <View style={styles.lista}>
@@ -167,7 +180,7 @@ export const Lista: React.FC<ListaProps> = ({ reloadTotal, reload, setReload }) 
                   />
               )}
             </View>
-        </View>
+        </ScrollView>
         
       );
     };

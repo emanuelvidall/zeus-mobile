@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import FirstScreen from './FirstScreen';
+import BottomNavigation from './BottomNavigation';
 import SecondScreen from './SecondScreen';
 import SplashScreen from './SplashScreen';
 
@@ -11,9 +11,9 @@ const Stack = createStackNavigator();
 
 function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
+    <NavigationContainer >
+      {/* <Stack.Navigator> */}
+        {/* <Stack.Screen
           name="Splash"
           component={SplashScreen}
           options={{
@@ -23,7 +23,15 @@ function App() {
         <Stack.Screen name="SecondScreen" component={SecondScreen} options={{
             headerShown: false,
           }} />
-      </Stack.Navigator>
+        <Stack.Screen
+          name="Main"
+          component={BottomNavigation}
+          options={{
+            headerShown: false,
+          }}
+        /> */}
+        <BottomNavigation />
+      {/* </Stack.Navigator> */}
     </NavigationContainer>
   );
 }

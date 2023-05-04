@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { VictoryAxis, VictoryBar, VictoryChart, VictoryTheme, VictoryLabel} from "victory-native";
+import { VictoryAxis, VictoryBar, VictoryChart, VictoryTheme, VictoryLabel, VictoryTooltip} from "victory-native";
 import moment from "moment";
 import { myIp } from "./ModalComponent";
 
@@ -64,7 +64,10 @@ export default class ChartVic extends React.Component {
 
 
 
-          }} />
+          }} labelComponent={<VictoryTooltip
+      style={{ fontSize: 12, fontFamily: "sans-serif" }}
+      flyoutStyle={{ fill: "white", stroke: "lightgray" }}
+    />}/>
         </VictoryChart>
       </View>
     );
