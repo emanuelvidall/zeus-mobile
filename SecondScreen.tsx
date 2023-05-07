@@ -76,7 +76,7 @@ function SecondScreen() {
           <Text style={styles.currentCostText}>R$ {totalcustos.toFixed(2)}</Text>
         </View>
         <View>
-          <Text style={styles.textoGrafico}>Histórico de Gastinhos</Text>
+          <Text style={styles.textoGrafico}>Histórico de Auspesas</Text>
         </View>
         <View style={styles.chartArea}>
           {/* <TestChart /> */}
