@@ -16,20 +16,19 @@ interface ModalProps {
 
 export const myIp = '10.50.188.151'
 
-export const MyModal: React.FC<ModalProps> = ({ visible, item, toggleModal, reloadTotal, reload, setReload, reloadData }) => {
+export const MyModal: React.FC<ModalProps> = ({ reloadTotal, reloadData }) => {
   const [desc, setDesc] = useState('');
   const [data, setData] = useState('');
   const [tipo, setTipo] = useState('');
   const [valor, setValor] = useState(0);
   const [quantidade, setQuantidade] = useState(0);
-  
-  const handleDataChange = (date) => {
+
+  const handleDataChange = (date: Date) => {
     const formattedDate = date.toLocaleString('en-GB', {
         day: '2-digit',
         month: '2-digit',
         year: 'numeric',
     })
-    console.log('data aqui!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', formattedDate)
     setData(formattedDate.replace(/\//g, '-'))
 }
 
@@ -129,7 +128,9 @@ function postData(url, dados) {
 })
 
   return (
-    <Modal visible={visible} animationType="slide">
+    <Modal visible={modalVisible} animationType="slide" onRequestClose={() => {
+        setModalVisible(false);
+      }}>
       <View style={styles.modalStyle}>
         <View style={styles.inputContainer}>
           <Text style={{ fontSize: 20, marginBottom: 20, fontFamily: 'ReadexPro-Medium', color: 'black'}}>Adicione uma nova despesa 💸 </Text>
@@ -172,7 +173,7 @@ function postData(url, dados) {
               <Text style={{ color: 'white', fontFamily: 'ReadexPro-Medium', fontSize: 16, }}>Adicionar</Text>
             </TouchableOpacity>
           <View style={{backgroundColor: 'transparent', width: '65%', marginTop: 25, }}>
-            <TouchableOpacity style={styles.modalButton} onPress={() => toggleModal()}>
+            <TouchableOpacity style={styles.modalButton} onPress={() => setModalVisible(false)}>
               <Text style={styles.modalButtonText}>Fechar</Text>
             </TouchableOpacity>
             

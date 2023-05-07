@@ -3,7 +3,6 @@ import {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {Lista} from './ListItems';
 import CurrentDate from './CurrentDate';
-import { MyModal } from './ModalComponent';
 import { myIp } from './ModalComponent';
 import ChartVic from './ChartVic';
 
@@ -18,13 +17,7 @@ interface Cost {
 
 function SecondScreen() {
   const [totalcustos, setTotalCustos] = useState<Number>(0);
-  const [modalVisible, setModalVisible] = useState(false);
   const [reload, setReload] = useState(false);
-
-  
-  const toggleModal = () => {
-    setModalVisible(!modalVisible);
-  };
 
   const getTotalCosts = async () => {
     try {
@@ -44,18 +37,23 @@ function SecondScreen() {
         (accumulator: number, currentValue: number) =>
           accumulator + currentValue,0);
       setTotalCustos(total);
-      console.log('Elements: ', result);
-      // setUsuarios(result);
-      // setDataFetched(true);
-      console.log('total dos custos', total);
+      // console.log('Elements: ', result);
+      // // setUsuarios(result);
+      // // setDataFetched(true);
+      // console.log('total dos custos', total);
     } catch (error) {
       console.error('Error:', error);
       console.log('cannot GET');
     }
   };
   useEffect(() => {
-  getTotalCosts();
-  }, []);
+    const intervalId = setInterval(() => {
+    getTotalCosts();
+  }, 3000);
+  return () => {
+    clearInterval(intervalId);
+  };
+}, []);
 
   return (
     <>
@@ -63,15 +61,13 @@ function SecondScreen() {
         <View style={styles.welcome1}>
           <CurrentDate />
         </View>
-        <View style={styles.dog1}>
-          <View>
-            <Text style={styles.dog1Nome}>Zeus</Text>
-            <Text style={styles.dog1Peso}>18kg</Text>
-            <Text style={styles.dog1Idade}>2 anos</Text>
-          </View>
-          <View style={styles.dog1Foto}>
+        <View style={styles.topSec}>
+          <View style={styles.dog1}>  
             <Image source={require('./src/dog1.png')} style={styles.dogavatar}></Image>
           </View>
+          <View style={styles.nomeTopSec}>
+          <Text>Zeus</Text>
+        </View>
         </View>
         <View style={styles.currentCost}>
           <Text style={styles.currentCostDesc}>
@@ -80,25 +76,25 @@ function SecondScreen() {
           <Text style={styles.currentCostText}>R$ {totalcustos.toFixed(2)}</Text>
         </View>
         <View>
-          <Text style={styles.textoGrafico}>Histórico de Gastos</Text>
+          <Text style={styles.textoGrafico}>Histórico de Gastinhos</Text>
         </View>
         <View style={styles.chartArea}>
           {/* <TestChart /> */}
           <ChartVic />
         </View>
         <View style={styles.listArea}>
-          <Text style={styles.transacoes}>Transações</Text>
+          <Text style={styles.transacoes}>Transaçoes Recentes</Text>
           <View style={styles.listItself}>
-            <Lista reloadTotal={getTotalCosts} reload={reload} setReload={setReload}/>
+            <Lista renderFirstOnly={true} reloadTotal={getTotalCosts} reload={reload} setReload={setReload}/>
           </View>
         </View>
         <View style={styles.posiTO}>
-          <View style={{borderRadius: 100, overflow: 'hidden'}}>
+          {/* <View style={{borderRadius: 100, overflow: 'hidden'}}>
             <TouchableOpacity  style={styles.buttonPlus} onPress={() => toggleModal()}>  
               <Text style={styles.buttonText}>+</Text>
             </TouchableOpacity>
-          </View>
-          {modalVisible && (
+          </View> */}
+          {/* {modalVisible && (
             <MyModal
                 visible={modalVisible}
                 toggleModal={toggleModal}
@@ -107,14 +103,12 @@ function SecondScreen() {
                 setReload={setReload}
                 reloadData={getTotalCosts}
             />
-          )}
+          )} */}
         </View>
       </View>
     </>
   );
 }
-
-const barHeight = 55;
 
 const styles = StyleSheet.create({
   input: {
@@ -125,6 +119,22 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 5,
     borderColor: '#d8d8d8',
+  },
+  nomeTopSec: {
+    position: 'absolute',
+    bottom: -8,
+    left: 12.5,
+  },
+  topSec: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 10,
+    right: 0,
+    marginRight: 10,
+    zIndex: 10,
+    marginTop: 10,
   },
   dog1Nome: {
     color: 'white',
@@ -151,33 +161,37 @@ const styles = StyleSheet.create({
   },
   dog1: {
     backgroundColor: '#1D2A30',
-    width: 250,
-    height: 80,
-    borderRadius: 10,
+    width: 60,
+    height: 60,
+    borderRadius: 100,
     flexDirection: 'row',
     display: 'flex',
     padding: 10,
     marginBottom: 10,
     zIndex: 10,
+    alignSelf: 'flex-end',
+    marginTop: 10,
+    marginRight: 10,
   },
   dog1Foto: {
     backgroundColor: '#28343c',
     borderRadius: 10,
     width: '30%',
-    marginLeft: 'auto',
   },
   dogavatar: {
-    width: 60,
-    height: 60,
-    borderRadius: 10,
-    marginLeft: 'auto',
+    width: 55,
+    height: 55,
+    borderRadius: 100,
+    alignSelf: 'center',
+    marginLeft: 2,
+    position: 'absolute',
   },
   transacoes: {
     fontFamily: 'ReadexPro-Medium',
     color: '#00160A',
     fontSize: 16,
     textAlign: 'center',
-    marginBottom: 5,
+    marginBottom: 10,
   },
   chartArea2: {
     position: 'relative',
@@ -205,6 +219,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     fontFamily: 'ReadexPro-Medium',
     color: '#00160A',
+    marginBottom: 5,
   },
   listDateValor: {
     fontSize: 19,
@@ -260,12 +275,16 @@ const styles = StyleSheet.create({
   currentCost: {
     backgroundColor: '#F6F6F6',
     width: '100%',
+    marginBottom: 10,
   },
   currentCostDesc: {
     alignSelf: 'flex-start',
     paddingLeft: 10,
     fontFamily: 'ReadexPro-Medium',
     color: '#00160A',
+    marginLeft: 9,
+    marginBottom: 10,
+    marginTop: 10,
   },
   currentCostText: {
     fontFamily: 'ReadexPro-Medium',
@@ -290,6 +309,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F6F6F6',
     paddingLeft: 8,
     marginBottom: 10,
+    marginTop: 22,
   },
   welcome2: {
     fontSize: 32,
@@ -307,15 +327,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingBottom: 25,
     paddingRight: 10,
-  },
-  Bar1: {
-    height: barHeight,
-    width: 20,
-    backgroundColor: '#F7F9FA',
-    margin: 'auto',
-    alignSelf: 'flex-end',
-    borderTopStartRadius: 4,
-    borderTopEndRadius: 4,
   },
   area1: {
     height: 200,

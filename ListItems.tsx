@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import {Text, FlatList, StyleSheet, ScrollView, Pressable, View, Alert, TouchableOpacity, Modal, PanResponder, RefreshControl} from 'react-native';
+import React from 'react';
+import {Text, FlatList, StyleSheet, ScrollView, View, TouchableOpacity} from 'react-native';
 import {useState, useEffect} from 'react';
 import moment from 'moment';
 import { myIp } from './ModalComponent';
@@ -22,9 +22,10 @@ interface ListaProps {
   reloadTotal: () => void
   reload: boolean;
   setReload: (reload: boolean) => void;
+  renderFirstOnly?: boolean;
 }
 
-export const Lista: React.FC<ListaProps> = ({ reloadTotal, reload, setReload }) => {
+export const Lista: React.FC<ListaProps> = ({ reloadTotal, reload, setReload, renderFirstOnly = false }) => {
     const [data, setData] = useState<ListItem[]>([]);
     const [editModal, setEditModal] = useState(false);
     const [selectedValor, setSelectedValor] = useState<number>(0);
@@ -58,13 +59,16 @@ export const Lista: React.FC<ListaProps> = ({ reloadTotal, reload, setReload }) 
         })
         .catch((error) => console.error('ocorreu um erro', error));
     };
-    
     useEffect(() => {
       fetchData();
-      setReload(false)
-    }, [reload]);
-    
 
+    const intervalId = setInterval(() => {
+      fetchData();
+    }, 3000);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [reload]);
 
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -78,9 +82,7 @@ export const Lista: React.FC<ListaProps> = ({ reloadTotal, reload, setReload }) 
     const renderItem = ({ item }: { item: ListItem }) => {
 
       return (
-        <ScrollView refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }>
+        <ScrollView>
             <View key={item._id}>
               <TouchableOpacity onPress={() => toggleModal(item.valor, item.data, item.desc, item.tipo, item._id, item.quantidade)}>
                 <View style={styles.lista}>
@@ -242,7 +244,7 @@ export const Lista: React.FC<ListaProps> = ({ reloadTotal, reload, setReload }) 
 
   return (
     <ScrollView horizontal={true}>
-        <FlatList data={data} renderItem={renderItem}/>
+        <FlatList data={renderFirstOnly ? data.slice(0, 2) : data} renderItem={renderItem}/>
     </ScrollView>
   );
 };

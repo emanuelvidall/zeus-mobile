@@ -12,6 +12,8 @@ export default class ChartVic extends React.Component {
     };
   }
 
+  
+
   async fetchData() {
     try {
       const response = await fetch(`http://${myIp}:3001/todoscustos`);
@@ -37,10 +39,20 @@ export default class ChartVic extends React.Component {
     } catch (error) {
       console.error("An error occurred", error);
     }
+    
   }
 
   componentDidMount() {
-    this.fetchData();
+    this.fetchData(); // Call fetchData initially
+
+    this.intervalId = setInterval(() => {
+      this.fetchData();
+    }, 3000); // 3000 milliseconds = 3 seconds
+  }
+
+  componentWillUnmount() {
+    // Clear the interval when the component is unmounted
+    clearInterval(this.intervalId);
   }
 
   
@@ -50,22 +62,22 @@ export default class ChartVic extends React.Component {
     const currentMonthIndex = currentDate.getMonth()+1
     return (
       <View style={styles.container}>
-        <VictoryChart width={300} padding={{ top: 10, bottom: 25, left: 5, right: 5 }} height={150}>
+        <VictoryChart width={300} padding={{ top: 10, bottom: 30, left: 5, right: 5 }} height={150}>
             <VictoryAxis
                         style={{axis:{stroke:'none'}}}
                         tickValues={['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez']}
                         domain={[0, 13]}
-                        tickLabelComponent={<VictoryLabel style={{ fontSize: 12, fontFamily: 'sans-serif', }} />}
+                        tickLabelComponent={<VictoryLabel style={{ fontSize: 12, fontFamily: 'ReadexPro-Regular', }} />}
           />
           <VictoryBar cornerRadius={6} barWidth={10} data={this.state.data} x="month" y="valor"style={{
             data: {
-                fill: ({datum}) => (datum.month == currentMonthIndex ? "#65A30D": "#1e2229")
+                fill: ({datum}) => (datum.month == currentMonthIndex ? "#22c55e": "#1e2229")
             }
 
 
 
           }} labelComponent={<VictoryTooltip
-      style={{ fontSize: 12, fontFamily: "sans-serif" }}
+      style={{ fontSize: 12, fontFamily: "ReadexPro-Regular" }}
       flyoutStyle={{ fill: "white", stroke: "lightgray" }}
     />}/>
         </VictoryChart>
