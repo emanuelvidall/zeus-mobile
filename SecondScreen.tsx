@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {Lista} from './ListItems';
 import CurrentDate from './CurrentDate';
-import { myIp } from './ModalComponent';
+import { myIp } from './AddModal';
 import ChartVic from './ChartVic';
 
 
@@ -79,7 +79,6 @@ function SecondScreen() {
           <Text style={styles.textoGrafico}>Histórico de Auspesas</Text>
         </View>
         <View style={styles.chartArea}>
-          {/* <TestChart /> */}
           <ChartVic />
         </View>
         <View style={styles.listArea}>
@@ -89,21 +88,6 @@ function SecondScreen() {
           </View>
         </View>
         <View style={styles.posiTO}>
-          {/* <View style={{borderRadius: 100, overflow: 'hidden'}}>
-            <TouchableOpacity  style={styles.buttonPlus} onPress={() => toggleModal()}>  
-              <Text style={styles.buttonText}>+</Text>
-            </TouchableOpacity>
-          </View> */}
-          {/* {modalVisible && (
-            <MyModal
-                visible={modalVisible}
-                toggleModal={toggleModal}
-                reloadTotal={getTotalCosts}
-                reload={reload}
-                setReload={setReload}
-                reloadData={getTotalCosts}
-            />
-          )} */}
         </View>
       </View>
     </>

@@ -12,11 +12,12 @@ interface ModalProps {
   reload: boolean;
   setReload: (reload: boolean) => void;
   reloadData: () => void
+  modalVisible: () => boolean;
 }
 
-export const myIp = '10.50.188.151'
+export const myIp = '192.168.0.16'
 
-export const MyModal: React.FC<ModalProps> = ({ reloadTotal, reloadData }) => {
+const AddModal: React.FC<ModalProps> = ({ reloadTotal, reloadData, toggleModal, visible }) => {
   const [desc, setDesc] = useState('');
   const [data, setData] = useState('');
   const [tipo, setTipo] = useState('');
@@ -128,9 +129,7 @@ function postData(url, dados) {
 })
 
   return (
-    <Modal visible={modalVisible} animationType="slide" onRequestClose={() => {
-        setModalVisible(false);
-      }}>
+    <Modal visible={visible} animationType="slide">
       <View style={styles.modalStyle}>
         <View style={styles.inputContainer}>
           <Text style={{ fontSize: 20, marginBottom: 20, fontFamily: 'ReadexPro-Medium', color: 'black'}}>Adicione uma nova despesa 💸 </Text>
@@ -173,7 +172,7 @@ function postData(url, dados) {
               <Text style={{ color: 'white', fontFamily: 'ReadexPro-Medium', fontSize: 16, }}>Adicionar</Text>
             </TouchableOpacity>
           <View style={{backgroundColor: 'transparent', width: '65%', marginTop: 25, }}>
-            <TouchableOpacity style={styles.modalButton} onPress={() => setModalVisible(false)}>
+            <TouchableOpacity style={styles.modalButton} onPress={() => toggleModal()}>
               <Text style={styles.modalButtonText}>Fechar</Text>
             </TouchableOpacity>
             
@@ -183,3 +182,5 @@ function postData(url, dados) {
     </Modal>
   );
 };
+
+export default AddModal;
