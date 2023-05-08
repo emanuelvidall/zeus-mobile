@@ -15,7 +15,7 @@ interface ModalProps {
   modalVisible: () => boolean;
 }
 
-export const myIp = '192.168.0.16'
+export const myIp = '10.50.188.169'
 
 const AddModal: React.FC<ModalProps> = ({ reloadTotal, reloadData, toggleModal, visible }) => {
   const [desc, setDesc] = useState('');
