@@ -48,7 +48,7 @@ function BottomNavigation() {
                 title: '',
                 tabBarIcon: ({ size, focused, color }) => {
                     if(focused){
-                        return (<View style={{ paddingTop: 16}}><FontAwesomeIcon icon={faHouse} size={25} /><View style={{width: 8, height: 8, backgroundColor: '#c52222', borderRadius: 100, alignSelf: 'center'}}></View></View>);
+                        return (<View style={{ paddingTop: 16}}><FontAwesomeIcon icon={faHouse} size={25} color='#c52222' /><View style={{width: 20, marginTop: 2, height: 2, backgroundColor: '#c52222', borderRadius: 100, alignSelf: 'center'}}></View></View>);
                     }
                     return (<View style={{ paddingTop: 16 }}><FontAwesomeIcon icon={faHouse} size={25} /></View>);
                 },
@@ -76,7 +76,7 @@ function BottomNavigation() {
                 title: '',
                 tabBarIcon: ({ size, focused, color }) => {
                     if(focused){
-                        return (<View style={{ paddingTop: 16}}><FontAwesomeIcon icon={faListCheck} size={25} /><View style={{width: 8, height: 8, backgroundColor: '#c52222', borderRadius: 100, alignSelf: 'center'}}></View></View>);
+                        return (<View style={{ paddingTop: 16}}><FontAwesomeIcon icon={faListCheck} color='#c52222' size={25} /><View style={{width: 26, marginTop: 2, height: 2, backgroundColor: '#c52222', borderRadius: 100, alignSelf: 'center'}}></View></View>);
                     }
                     return (<View style={{ paddingTop: 16 }}><FontAwesomeIcon icon={faListCheck} size={25} /></View>);
                 },

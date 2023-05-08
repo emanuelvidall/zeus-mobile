@@ -1,10 +1,11 @@
 import React from 'react';
-import {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {Lista} from './ListItems';
+import { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import { Lista } from './ListItems';
 import CurrentDate from './CurrentDate';
 import { myIp } from './AddModal';
 import ChartVic from './ChartVic';
+import SectionBar from './SectionBar';
 
 
 interface Cost {
@@ -35,12 +36,8 @@ function SecondScreen() {
       const precoArray: number[] = result.map((obj: Cost) => obj.valor);
       const total: number = precoArray.reduce(
         (accumulator: number, currentValue: number) =>
-          accumulator + currentValue,0);
+          accumulator + currentValue, 0);
       setTotalCustos(total);
-      // console.log('Elements: ', result);
-      // // setUsuarios(result);
-      // // setDataFetched(true);
-      // console.log('total dos custos', total);
     } catch (error) {
       console.error('Error:', error);
       console.log('cannot GET');
@@ -48,12 +45,12 @@ function SecondScreen() {
   };
   useEffect(() => {
     const intervalId = setInterval(() => {
-    getTotalCosts();
-  }, 3000);
-  return () => {
-    clearInterval(intervalId);
-  };
-}, []);
+      getTotalCosts();
+    }, 3000);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
 
   return (
     <>
@@ -62,12 +59,12 @@ function SecondScreen() {
           <CurrentDate />
         </View>
         <View style={styles.topSec}>
-          <View style={styles.dog1}>  
+          <View style={styles.dog1}>
             <Image source={require('./src/dog1.png')} style={styles.dogavatar}></Image>
           </View>
           <View style={styles.nomeTopSec}>
-          <Text>Zeus</Text>
-        </View>
+            <Text style={{ color: 'black', fontFamily: 'ReadexPro-Medium' }}>Zeus</Text>
+          </View>
         </View>
         <View style={styles.currentCost}>
           <Text style={styles.currentCostDesc}>
@@ -76,15 +73,16 @@ function SecondScreen() {
           <Text style={styles.currentCostText}>R$ {totalcustos.toFixed(2)}</Text>
         </View>
         <View>
-          <Text style={styles.textoGrafico}>Histórico de Auspesas</Text>
+          <Text style={styles.textoGrafico}>Histórico de Despesas</Text>
         </View>
         <View style={styles.chartArea}>
           <ChartVic />
+          {/* <SectionBar/> */}
         </View>
         <View style={styles.listArea}>
           <Text style={styles.transacoes}>Transaçoes Recentes</Text>
           <View style={styles.listItself}>
-            <Lista renderFirstOnly={true} reloadTotal={getTotalCosts} reload={reload} setReload={setReload}/>
+            <Lista renderFirstOnly={true} reloadTotal={getTotalCosts} reload={reload} setReload={setReload} />
           </View>
         </View>
         <View style={styles.posiTO}>
@@ -106,7 +104,7 @@ const styles = StyleSheet.create({
   },
   nomeTopSec: {
     position: 'absolute',
-    bottom: -8,
+    bottom: -10,
     left: 12.5,
   },
   topSec: {

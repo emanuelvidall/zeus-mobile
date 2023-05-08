@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Modal, TouchableOpacity, View, Text, StyleSheet, Alert } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faPenToSquare, faTrashCan, faX, faStethoscope, faShower, faBowlRice, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faTrashCan, faX } from '@fortawesome/free-solid-svg-icons';
 import { myIp } from './AddModal';
 import { TextInput } from 'react-native-gesture-handler';
 
